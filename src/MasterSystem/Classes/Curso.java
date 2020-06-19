@@ -17,4 +17,4 @@ public class Curso {
 	public List<Disciplina> getDisciplinas() {
 		return disciplinas;
 	}
-}/*loli full hd 4k*/
+}/*loli full hd 4k*/testeste
