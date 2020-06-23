@@ -73,7 +73,8 @@ public class Executavel {
 					Cadastro_Professor();
 				break;
 			case "b":
-				loop = 1;//quebra do loop;
+				
+				loop = 1;
 				break;
 			case "0":
 				loop = 1;//quebra do loop;
@@ -131,9 +132,17 @@ public class Executavel {
 	
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
-		
 		do {
-
+			 for  (int i = 0; i < tam; i++) {
+	                System.out.printf("----Cadastro  de  Disciplina----\n");
+	                System.out.println("Digite o nome da materia:");
+	                String nomeDic = sc.next();
+	                System.out.println("Digite a carga horaria da materia:");
+	                int cargaHorariaDic = sc.nextInt();
+	                
+	                
+	      
+	            }
 			
 		}while(loop == 0);
 	}
