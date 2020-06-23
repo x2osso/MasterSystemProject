@@ -73,7 +73,7 @@ public class Executavel {
 					Cadastro_Professor();
 				break;
 			case "b":
-				
+					Cadastro_Diciplina();
 				loop = 1;
 				break;
 			case "0":
@@ -140,17 +140,20 @@ public class Executavel {
 	                String nomeDic = sc.next();
 	                System.out.println("Digite a carga horaria da materia:");
 	                int cargaHorariaDic = sc.nextInt();
-	                System.out.println("(1)Cadastrar novo Professor; \n (2)Selhecionar professor;");
+	                System.out.println("(1)Cadastrar novo Professor; \n(2)Selhecionar professor;");
 	                escolhaProf = sc.nextInt();
 	                switch(escolhaProf) {
 	                case 1:
 	                	Cadastro_Professor();
 	                	break;
 	                case 2:
+	                	Lista_Professores();
 	                	break;
 	                default:
 	                	System.out.println("Opção invalida!!");
 	                }
+	                
+	                
 	                
 	      
 	            }
@@ -161,7 +164,19 @@ public class Executavel {
 	public static void Lista_Professores() {
         contador =1;
         System.out.println("----Professores Cadastrados----"); 
-        for(int i=0;i<tam;i++){
+        if(professores.size() < 1) {
+        	System.out.println("Nenhum Professor Cadastrado :c");
+        	System.out.println("(1)Cadastrar um novo professor");
+            System.out.println("(2)Voltar ao menu de cadastro");
+            int escolhaList = sc.nextInt();
+            if(escolhaList==1) {
+            	
+            }else {
+            	Menu_Cadastro();
+            }
+        	
+        }else{
+        	for(int i=0;i<tam;i++){
             System.out.printf("\n%d Professor\n",contador);
             System.out.printf("Nome:");
             System.out.print(professores.get(i).getNome() + "\n");
@@ -169,6 +184,7 @@ public class Executavel {
             System.out.print(professores.get(i).getCpf() + "\n");
             System.out.printf("Data:");
             System.out.print(professores.get(i).getDtNascimento() + "\n");
-        } 
+        	}  
+        }
 	}
 }
