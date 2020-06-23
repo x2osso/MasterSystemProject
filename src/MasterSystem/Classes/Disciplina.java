@@ -7,7 +7,11 @@ public class Disciplina {
 	Professor professor;
 	
 	public Disciplina() {
-		
+	}
+	public Disciplina(String nome, int cargaHoraria, Professor professor) {
+		this.nome = nome;
+		this.cargaHoraria = cargaHoraria;
+		this.professor = professor;
 	}
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
