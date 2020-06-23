@@ -132,6 +132,7 @@ public class Executavel {
 	
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
+		int escolhaProf;
 		do {
 			 for  (int i = 0; i < tam; i++) {
 	                System.out.printf("----Cadastro  de  Disciplina----\n");
@@ -139,7 +140,17 @@ public class Executavel {
 	                String nomeDic = sc.next();
 	                System.out.println("Digite a carga horaria da materia:");
 	                int cargaHorariaDic = sc.nextInt();
-	                
+	                System.out.println("(1)Cadastrar novo Professor; \n (2)Selhecionar professor;");
+	                escolhaProf = sc.nextInt();
+	                switch(escolhaProf) {
+	                case 1:
+	                	Cadastro_Professor();
+	                	break;
+	                case 2:
+	                	break;
+	                default:
+	                	System.out.println("Opção invalida!!");
+	                }
 	                
 	      
 	            }
