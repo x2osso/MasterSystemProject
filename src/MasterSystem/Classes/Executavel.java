@@ -147,6 +147,7 @@ public class Executavel {
 	                	break;
 	                case 2:
 	                	Lista_Professores();
+	                	
 	                	break;
 	                default:
 	                	System.out.println("Opção invalida!!");
