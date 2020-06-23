@@ -118,18 +118,20 @@ public class Executavel {
                 Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora,status);
                 professores.add(professor);
                 loop = 1;
+                
+            }
+
+            System.out.println("(1)Cadastrar um novo professor");
+            System.out.println("(2)Voltar ao menu de cadastro");
+            escolha = sc.nextInt();
+            if(escolha==1) {
+            	
+            }else {
+            	Menu_Cadastro();
             }
            
 		}while(loop == 0);
 		
-		 System.out.println("(1)Cadastrar um novo professor");
-         System.out.println("(2)Voltar ao menu de cadastro");
-         escolha = sc.nextInt();
-         if(escolha==1) {
-         	
-         }else {
-         	Menu_Cadastro();
-         }
 	}
 	
 	public static void Cadastro_Diciplina() {
