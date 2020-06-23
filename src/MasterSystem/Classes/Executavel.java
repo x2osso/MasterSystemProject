@@ -88,53 +88,44 @@ public class Executavel {
 	}
 	
 	public static void Cadastro_Professor() {
-		int loop = 0;
-		int i=tam-1;
-		int escolha = 0;
-			
-		do {
-            for  (i = 0; i < tam; i++) {
-                System.out.printf("----Cadastro  %d Professor----\n",contador);
-                System.out.println("Digite o Nome:");
-                String nome = sc.next();
-                System.out.println("Digite o cpf:");
-                String cpf = sc.next(); 
-                System.out.println("Digite data de nascimento:");
-                String dataString = sc.next(); 
-                String [] dataSeparada = dataString.split("/");
-                LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
-                System.out.println(dtNascimento);
-                System.out.println("Digite registro:");
-                String nRegistro = sc.next(); 
-                System.out.println("Digite titulação");
-                String titulação = sc.next(); 
-                System.out.println("Digite horasSemanais");
-                String horasSemanais = sc.next();
-                System.out.println("Digite precoHora");
-                String precoHora = sc.next();
-                int status = 1;
-                
-                contador++;
-                Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora,status);
-                professores.add(professor);
-                
-                
-                System.out.println("(1)Cadastrar um novo professor");
-                System.out.println("(2)Voltar ao menu de cadastro");
-                escolha = sc.nextInt();
-                if(escolha==1) {
-                	
-                }else {
-                	loop = 1;
-                	Menu_Cadastro();
-                }
-                
-            }
+        int loop = 0;
+        int escolha = 0;
 
-            
-           
-		}while(loop == 0);
-		
+        do {
+            System.out.printf("----Cadastro  %d Professor----\n",contador);
+            System.out.println("Digite o Nome:");
+            String nome = sc.next();
+            System.out.println("Digite o cpf:");
+            String cpf = sc.next(); 
+            System.out.println("Digite data de nascimento:");
+            String dataString = sc.next(); 
+            String [] dataSeparada = dataString.split("/");
+            LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
+            System.out.println(dtNascimento);
+            System.out.println("Digite registro:");
+            String nRegistro = sc.next(); 
+            System.out.println("Digite titulação");
+            String titulação = sc.next(); 
+            System.out.println("Digite horasSemanais");
+            String horasSemanais = sc.next();
+            System.out.println("Digite precoHora");
+            String precoHora = sc.next();
+            int status = 1;
+
+            contador++;
+            Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora,status);
+            professores.add(professor);
+
+            System.out.println("(1)Cadastrar um novo professor");
+            System.out.println("(2)Voltar ao menu de cadastro");
+            escolha = sc.nextInt();
+            if(escolha==1) {
+
+            }else {
+                loop = 1;
+                Menu_Cadastro();
+            }
+        }while(loop == 0);
 	}
 	
 	public static void Cadastro_Diciplina() {
@@ -184,15 +175,15 @@ public class Executavel {
             }
         	
         }else{
-        	for(int i=0;i<tam;i++){
-            System.out.printf("\n%d Professor\n",contador);
-            System.out.printf("Nome:");
-            System.out.print(professores.get(i).getNome() + "\n");
-            System.out.printf("CPF:");
-            System.out.print(professores.get(i).getCpf() + "\n");
-            System.out.printf("Data:");
-            System.out.print(professores.get(i).getDtNascimento() + "\n");
-        	}  
+        	for(int i = 0; i < professores.size() ;i++){
+                System.out.printf("\n%d Professor\n",contador);
+                System.out.printf("Nome:");
+                System.out.print(professores.get(i).getNome() + "\n");
+                System.out.printf("CPF:");
+                System.out.print(professores.get(i).getCpf() + "\n");
+                System.out.printf("Data:");
+                System.out.print(professores.get(i).getDtNascimento() + "\n");
+            } 
         }
 	}
 	public Professor getProfessor() {
