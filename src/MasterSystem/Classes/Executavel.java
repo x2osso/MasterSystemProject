@@ -7,6 +7,7 @@ public class Executavel {
 	
 	public static ArrayList<Professor> professores = new ArrayList<Professor>();
 	public static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
 	
 	public static Scanner sc = new Scanner(System.in);
     public static int tam=1;
@@ -56,6 +57,7 @@ public class Executavel {
 			System.out.println("----MENU DE PESQUISA----");
 			System.out.println("(1)Listar professor;");
 			System.out.println("(2)Listar Disciplina;");
+			System.out.println("(3)Listar Cursos;");
 			System.out.println("------------------------");
 			int escolha = sc.nextInt();
 			switch(escolha) {
@@ -66,6 +68,9 @@ public class Executavel {
 			case 2:
 				loop = 1;
 				Lista_Disciplina();
+				break;
+			case 3:
+				Lista_Cursos();
 				break;
 			default:
 				System.out.println("Entrada invalida!!!!");
@@ -102,6 +107,9 @@ public static void Menu_Cadastro(){
 			case "b":
 					Cadastro_Diciplina();
 				loop = 1;
+				break;
+			case "c":
+				Cadastro_Curso();
 				break;
 			case "1":
 				loop = 1;//quebra do loop;
@@ -164,7 +172,6 @@ public static void Menu_Cadastro(){
         }while(loop == 0);
 	}
 	
-	@SuppressWarnings("unlikely-arg-type")
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
 		int escolhaProf;
@@ -297,6 +304,61 @@ public static Professor Cadastro_Professor_Disciplina() {
         professores.add(professor);
 
         return professor; 
+	}
+
+	public static void Cadastro_Curso() {
+		boolean menu = true;
+		
+		System.out.println("------Cadastro de Curso------");
+		sc.nextLine();
+		System.out.println("Digite o nome do curso:");
+		String nomeCurso = sc.nextLine();
+		
+		Curso curso = new Curso(nomeCurso);
+		cursos.add(curso);
+		
+		System.out.println("Quais disciplinas gostaria de adicionar ao curso?");
+		System.out.println("Segue as existentes: ");
+		Lista_Disciplina();
+		
+		do {
+			System.out.println("Digite o nome da disciplina desejada:");
+			String nomeDisciplina = sc.nextLine();
+			
+			Disciplina disciplina = encontraDisciplina(nomeDisciplina);
+			
+			
+			curso.inserirDisciplina(disciplina);
+			
+			System.out.println("1 - Adicionar nova diciplina");
+			System.out.println("2 - Finalizar cadastro do curso");
+			int escolha = sc.nextInt();
+			
+			if(escolha == 2) {
+				Menu_Cadastro();
+				menu = false;
+			} else if(!(escolha == 2) || !(escolha == 1)) {
+				System.out.println("Opção inválida, retornando a tela de cadastro...");
+				Menu_Cadastro();
+				menu = false;
+			}
+		} while (menu); 
+	}
 	
+	public static void Lista_Cursos() {
+		for(Curso curso : cursos) {
+			System.out.println("Nome:" + curso.getNomeCurso());
+		}
+	}
+	
+	public static Disciplina encontraDisciplina(String nome) {
+		Disciplina materia = null;
+		
+		for(Disciplina disciplina : disciplinas) {
+			if(disciplina.getNome().equals(nome)) {
+				materia = disciplina;
+			}
+		}
+		return materia;
 	}
 }

@@ -5,9 +5,8 @@ public class Curso {
 	private String nomeCurso;
 	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	
-	public Curso(String nomeCurso, Disciplina disciplina) {
+	public Curso(String nomeCurso) {
 		setNomeCurso(nomeCurso);
-		inserirDisciplina(disciplina);
 	}
 	
 	private void setNomeCurso(String nomeCurso) {
@@ -18,7 +17,7 @@ public class Curso {
 		return nomeCurso;
 	}
 	
-	private void inserirDisciplina(Disciplina disciplina) {
+	public void inserirDisciplina(Disciplina disciplina) {
 		this.disciplinas.add(disciplina);
 	}
 	
