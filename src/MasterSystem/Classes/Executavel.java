@@ -92,7 +92,7 @@ public class Executavel {
 			default:
 				System.out.println("Entrada invalida!!!!");
 			}
-			
+			/*jorge*/
 			
 		}while(loop == 0);
 	}
