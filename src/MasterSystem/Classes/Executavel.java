@@ -21,21 +21,24 @@ public class Executavel {
 		String escolha;
 		do {
 			System.out.println("\n\n-----Menu-Principal-----");
-			System.out.println("     (a)Cadastros");
-			System.out.println("     (b)Pesquisas");
-			System.out.println("     (c)Exit");
+			System.out.println("     (1)Cadastros;");
+			System.out.println("     (2)Pesquisas;");
+			System.out.println("     (3)Exit;");
 			System.out.println("------------------------");
 			System.out.println("Digite uma Opcao:");
 			escolha = sc.next();
 			
 			switch(escolha) {
-				case "a":
+				case "1":
 					loop = 1;//quebra do loop;
 					Menu_Cadastro();
 					break;
-				case "b":
+				case "2":
 					loop = 1;//quebra do loop;
-					Lista_Disciplina();
+					Menu_Pesquisas();
+					break;
+				case "3":
+					
 					break;
 				default:
 					System.out.println("Entrada invalida !!");
@@ -53,6 +56,7 @@ public class Executavel {
 			System.out.println("----MENU DE PESQUISA----");
 			System.out.println("(1)Listar professor;");
 			System.out.println("(2)Listar Disciplina;");
+			System.out.println("------------------------");
 			int escolha = sc.nextInt();
 			switch(escolha) {
 			case 1:
@@ -85,8 +89,8 @@ public static void Menu_Cadastro(){
 		System.out.println("(f)Cadastro de Estudantes");
 		System.out.println("(g)Cadastro de Alunos no Curso");
 		System.out.println("--------------------------");
-		System.out.println("(0)Voltar ao Menu Principal");
-		System.out.println("(1)Encerrar Sistema");
+		System.out.println("(1)Voltar ao Menu Principal");
+		System.out.println("(2)Encerrar Sistema");
 		System.out.println("--------------------------");
 		System.out.println("Digite uma Opcao:");
 		escolha = sc.next();
@@ -99,9 +103,13 @@ public static void Menu_Cadastro(){
 					Cadastro_Diciplina();
 				loop = 1;
 				break;
-			case "0":
+			case "1":
 				loop = 1;//quebra do loop;
 				Menu_Principal();
+				break;
+			case "2":
+				System.out.println("Sistema Finalizado !!");
+				loop=1;
 				break;
 			default:
 				System.out.println("Entrada invalida !!");
@@ -115,29 +123,29 @@ public static void Menu_Cadastro(){
         int escolha = 0;
 
         do {
-            System.out.printf("----Cadastro  %d Professor----\n",contador);
+            System.out.printf("\n\n----Cadastro  %d Professor----\n",contador);
             System.out.println("Digite o Nome:");
             String nome = sc.next();
             
-            System.out.println("Digite o cpf:");
+            System.out.println("Digite o numero de cpf:");
             String cpf = sc.next(); 
             
-            System.out.println("Digite data de nascimento:");
+            System.out.println("Digite data de nascimento utilizando ' / ' Exemplo:18/08/1998");
             String dataString = sc.next(); 
             String [] dataSeparada = dataString.split("/");
             LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
             System.out.println(dtNascimento);
             
-            System.out.println("Digite registro:");
+            System.out.println("Digite o numero de registro:");
             String nRegistro = sc.next(); 
             
             System.out.println("Digite titulação");
             String titulação = sc.next(); 
             
-            System.out.println("Digite horasSemanais");
+            System.out.println("Digite Horas Semanais");
             float horasSemanais = sc.nextFloat();
             
-            System.out.println("Digite precoHora");
+            System.out.println("Digite Preço por Hora, exemplo: 4,50");
             double precoHora = sc.nextDouble();
 
             contador++;
@@ -233,14 +241,14 @@ public static void Menu_Cadastro(){
 
 	public static void Lista_Disciplina() {
 		
-		System.out.println("----Disciplinas Cadastradas----"); 
         if(professores.size() < 1) {
-        	System.out.println("Nenhuma diciplina Cadastrada ");
+        	System.out.println("!! NENHUMA DICIPLINA CADASTRADA !! ");
+    		System.out.println("\n----Disciplinas Cadastradas----"); 
         	System.out.println("(1)Cadastrar uma nova Disciplina");
             System.out.println("(2)Voltar ao menu de cadastro");
             int escolhaList = sc.nextInt();
             if(escolhaList==1) {
-            	
+            	Cadastro_Diciplina();
             }else {
             	Menu_Cadastro();
             }
