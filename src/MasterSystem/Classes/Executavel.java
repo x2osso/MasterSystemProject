@@ -629,7 +629,6 @@ public static Professor Cadastro_Professor_Disciplina() {
 				estudante = aluno;
 			}
 		}
-		
 		return estudante;
 	}
 	
