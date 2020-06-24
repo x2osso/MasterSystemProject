@@ -13,6 +13,7 @@ public class Executavel {
     public static int contador =1;
 	
 	public static void main(String[] args) {
+		Cadastro_Automatico();
 		Menu_Principal();
 	}
 	
@@ -198,16 +199,23 @@ public static void Menu_Cadastro(){
 	                	}else {
 	                		contador=1;
 		                	for(int i = 0; i < professores.size() ;i++){
-		                        System.out.printf("\n -- %d Professor --\n",contador);
+		    	        		System.out.println("\n--------------------------");
+		                        System.out.printf("\n -- %d. Professor --\n",contador);
 		                        System.out.printf("Nome:");
 		                        System.out.print(professores.get(i).getNome() + "\n");
 		                        System.out.printf("CPF:");
 		                        System.out.print(professores.get(i).getCpf() + "\n");
-		    	        		System.out.println("\n--------------------------");
 		                    } 
 		                	System.out.println("Digite o CPF do professor escolhido: ");
 		                	String escolha = sc.next();
-		                	professorD = professores.get(professores.indexOf(escolha));
+		                	
+		                	for(int i = 0; i < professores.size() ;i++){
+		                		if (escolha== professores.get(i).getCpf()) {
+		                			professorD = professores.get(i);
+		                			System.out.println(professorD);
+		                		};
+		                	}
+
 		                	contador++;
 		                	break;
 	                	}
@@ -313,7 +321,6 @@ public static Professor Cadastro_Professor_Disciplina() {
         String dataString = sc.next(); 
         String [] dataSeparada = dataString.split("/");
         LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
-        System.out.println(dtNascimento);
         
         System.out.println("Digite registro:");
         String nRegistro = sc.next(); 
@@ -333,4 +340,30 @@ public static Professor Cadastro_Professor_Disciplina() {
         return professor; 
 	
 	}
+public static void Cadastro_Automatico() {
+
+        String nome = "flavio";
+     
+        String cpf = "546"; 
+        
+        String dataString = "18/08/1998"; 
+        String [] dataSeparada = dataString.split("/");
+        LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
+        
+        String nRegistro = "110"; 
+        
+        String titulação = "teste"; 
+        
+        float horasSemanais = 5;
+        
+        double precoHora = 5;
+
+        contador++;
+        Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
+        professores.add(professor);
+
+         Menu_Principal();
+
+        
+}
 }
