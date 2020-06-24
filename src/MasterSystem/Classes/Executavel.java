@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Executavel {
 	
+	/* TESTE */
+	
 	public static ArrayList<Professor> professores = new ArrayList<Professor>();
 	public static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
