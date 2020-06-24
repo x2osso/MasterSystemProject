@@ -151,6 +151,7 @@ public static void Menu_Cadastro(){
             contador++;
             Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
             professores.add(professor);
+    		System.out.println("\n--------------------------");
             System.out.println("(1)Cadastrar um novo professor");
             System.out.println("(2)Voltar ao menu de cadastro");
             escolha = sc.nextInt();
@@ -176,26 +177,41 @@ public static void Menu_Cadastro(){
 	                System.out.println("Digite a carga horaria da materia:");
 	                int cargaHorariaDic = sc.nextInt();
 	                System.out.println("Selhecionar professor:");
-	                System.out.println("(1)Cadastrar novo Professor; \n(2)Listar professor;");
+	                System.out.println("(1)Cadastrar novo Professor; \n(2)Selecionar professor utilizando CPF;");
 	                escolhaProf = sc.nextInt();
 	                switch(escolhaProf) {
 	                case 1:
 	                	professorD = Cadastro_Professor_Disciplina();
 	                	break;
 	                case 2:
+	                	if(professores.size() < 1) {
+	                    	System.out.println("!! NENHUMA PROFESSOR CADASTRADO!! ");
+	    	                System.out.println("\n(1)Cadastrar NOVO Professor\n(2)Voltar ao menu principal");
+	    	                int escolha = sc.nextInt();
+	    	                if(escolha == 2) {
+	    	                		loop = 1;
+	    	                		Menu_Principal();
+	    	                }else {
+	    	                	Cadastro_Professor();
+	    	                }
+	                    	
+	                	}else {
+	                		contador=1;
+		                	for(int i = 0; i < professores.size() ;i++){
+		                        System.out.printf("\n -- %d Professor --\n",contador);
+		                        System.out.printf("Nome:");
+		                        System.out.print(professores.get(i).getNome() + "\n");
+		                        System.out.printf("CPF:");
+		                        System.out.print(professores.get(i).getCpf() + "\n");
+		    	        		System.out.println("\n--------------------------");
+		                    } 
+		                	System.out.println("Digite o CPF do professor escolhido: ");
+		                	String escolha = sc.next();
+		                	professorD = professores.get(professores.indexOf(escolha));
+		                	contador++;
+		                	break;
+	                	}
 	                	
-	                	for(int i = 0; i < professores.size() ;i++){
-	                        System.out.printf("\n%d Professor\n",contador);
-	                        System.out.printf("Nome:");
-	                        System.out.print(professores.get(i).getNome() + "\n");
-	                        System.out.printf("CPF:");
-	                        System.out.print(professores.get(i).getCpf() + "\n");
-	                    } 
-	                	System.out.println("Digite o CPF do professor escolhido: ");
-	                	String escolha = sc.next();
-	                	professorD = professores.get(professores.indexOf(escolha));
-	                	/*em teoria ta certo*/
-	                	break;
 	                default:
 	                	System.out.println("Opção invalida!!");
 	                }
@@ -250,7 +266,7 @@ public static void Menu_Cadastro(){
 	}
 
 	public static void Lista_Disciplina() {
-        if(professores.size() < 1) {
+        if(disciplinas.size() < 1) {
         	System.out.println("!! NENHUMA DICIPLINA CADASTRADA !! ");
     		System.out.println("\n----Digite uma opção----"); 
         	System.out.println("(1)Cadastrar uma nova Disciplina");
