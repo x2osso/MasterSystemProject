@@ -210,10 +210,12 @@ public static void Menu_Cadastro(){
 		                	String escolha = sc.next();
 		                	
 		                	for(int i = 0; i < professores.size() ;i++){
-		                		if (escolha== professores.get(i).getCpf()) {
+		                        System.out.print("--dado1--" + professores.get(i).getCpf() + "\n");
+		                        System.out.println("---dados2---"+ escolha);
+		                        
+		                		if (escolha.equals(professores.get(i).getCpf())) {
 		                			professorD = professores.get(i);
-		                			System.out.println(professorD);
-		                		};
+		                		}
 		                	}
 
 		                	contador++;
