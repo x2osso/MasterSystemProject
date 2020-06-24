@@ -20,7 +20,8 @@ public class Executavel {
     public static int contador =1;
 	
 	public static void main(String[] args) {
-		Cadastro_Automatico();
+		Cadastro_Automatico_Professor();
+		Cadastro_Automatico_Disciplina();
 	}
 	
 	public static void Menu_Principal() {	
@@ -67,11 +68,14 @@ public class Executavel {
 			System.out.println("(3)Listar Cursos;");
 			System.out.println("(4)Listar Colegiados");
 			System.out.println("(5)Listar Estudantes");
-			System.out.println("(6)Listar Alunos de um Curso");
-
 			System.out.println("------------------------");
+			System.out.println("(6)Voltar ao Menu Principal");
+			System.out.println("(0)Encerrar Sistema");
+			System.out.println("--------------------------");
 			escolha = sc.nextInt();
 			switch(escolha) {
+			case 0:
+				break;
 			case 1:
 				loop = 1;
 				Lista_Professores();
@@ -90,12 +94,12 @@ public class Executavel {
 				sc.nextLine();
 				System.out.println("Favor, inserir nome do curso que deseja ver os estudantes:");
 				String nomeCurso = sc.nextLine();
-				Lista_Alunos_Curso(nomeCurso);
+
+				Lista_Estudantes(nomeCurso);
 				break;
 			case 6:
-				sc.nextLine();
-				
-				System.out.println("Favor, inserir o nome do curso que deseja ver");
+				Menu_Principal();
+
 				break;
 				
 				/* TESTANDO */
@@ -340,14 +344,6 @@ public static void Menu_Cadastro(){
                 System.out.println(disciplinas.get(i).getProfessor());
         		System.out.println("\n--------------------------");
             } 
-            System.out.println("(1)Voltar ao menu principal");
-            System.out.println("(2)Voltar ao menu de Pesquisas");
-            int escolha = sc.nextInt();
-            if(escolha==1) {
-            	Menu_Principal();
-            }else {
-				Menu_Pesquisas();
-            }
         }
 	}
 public static Professor Cadastro_Professor_Disciplina() {
@@ -406,9 +402,9 @@ public static Professor Cadastro_Professor_Disciplina() {
 			
 			
 			curso.inserirDisciplina(disciplina);
-			
+			System.out.println("!! CURSO CADASTRADO COM SUCESSO !!");
 			System.out.println("1 - Adicionar nova disciplina");
-			System.out.println("2 - Finalizar cadastro do curso");
+			System.out.println("2 - Voltar ao menu de cadastro");
 			int escolha = sc.nextInt();
 			
 			switch(escolha) {
@@ -477,34 +473,6 @@ public static Professor Cadastro_Professor_Disciplina() {
 		return curso;
 	}
 	
-	
-public static void Cadastro_Automatico() {
-
-        String nome = "flavio";
-     
-        String cpf = "546"; 
-        
-        String dataString = "18/08/1998"; 
-        String [] dataSeparada = dataString.split("/");
-        LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
-        
-        String nRegistro = "110"; 
-        
-        String titulação = "teste";
-        
-        float horasSemanais = 5;
-        
-        double precoHora = 5;
-
-        contador++;
-        Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
-        professores.add(professor);
-
-         Menu_Principal();
-
-        
-	}
-	
 	public static Professor Encontra_Professor(String CPF) {
 		Professor professor = null;
 		
@@ -570,14 +538,20 @@ public static void Cadastro_Automatico() {
 	}
 	
 	public static void Lista_Colegiado() {
-		for(Colegiado colegiado : colegiados) {
-			System.out.println("Curso: " + colegiado.getCurso().getNomeCurso());
+		if(colegiados.size() < 1) {
+			System.out.println("!! NENHUM COLEGIADO CADASTRADO !!");
 			
-			for(Professor professor : colegiado.recuperarProfessores()) {
-				System.out.println("Professor(a): " + professor.getNome());
+		}else {
+			for(Colegiado colegiado : colegiados) {
+				System.out.println("Curso: " + colegiado.getCurso().getNomeCurso());
+				
+				for(Professor professor : colegiado.recuperarProfessores()) {
+					System.out.println("Professor(a): " + professor.getNome());
+				}
 			}
 		}
-	}
+		}
+
 	
 	public static void Cadastrar_Estudantes() {
 		boolean menu = true;
@@ -719,4 +693,71 @@ public static void Cadastro_Automatico() {
 			System.out.println("RA: " + estudante.getRA());
 		}
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static void Cadastro_Automatico_Professor() {
+
+        String nome = "flavio";
+     
+        String cpf = "546"; 
+        
+        String dataString = "18/08/1998"; 
+        String [] dataSeparada = dataString.split("/");
+        LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
+        
+        String nRegistro = "110"; 
+        
+        String titulação = "teste";
+        
+        float horasSemanais = 5;
+        
+        double precoHora = 5;
+
+        contador++;
+        Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
+        professores.add(professor);
+
+        Cadastro_Automatico_Disciplina();
+
+        
+	}
+	public static void Cadastro_Automatico_Disciplina() {
+		Professor professorD = null;
+		String escolha = "546";
+	                	
+		for(int i = 0; i < 1;i++) {
+			if(escolha.equals(professores.get(i).getCpf())) {
+				professorD = professores.get(i);
+				String nomeDic ="matematica";
+				int cargaHorariaDic = 3;
+	        	Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
+	        	disciplinas.add(disciplina);	                
+	       }
+	
+		}
+		Menu_Principal();
+	}
+	
+	
+	
 }
