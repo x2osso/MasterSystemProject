@@ -18,7 +18,7 @@ public class AlunosCurso {
 		return this.curso;
 	}
 	
-	private void inserirEstudante(Estudante estudante) {
+	public void inserirEstudante(Estudante estudante) {
 		alunosCurso.put(estudante.getRA(), estudante);
 	}
 	

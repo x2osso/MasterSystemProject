@@ -1,6 +1,7 @@
 package MasterSystem.Classes;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Executavel {
@@ -12,6 +13,7 @@ public class Executavel {
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
 	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
 	public static ArrayList<Estudante> estudantes = new ArrayList<Estudante>();
+	public static ArrayList<AlunosCurso> alunosCurso = new ArrayList<AlunosCurso>();
 	
 	public static Scanner sc = new Scanner(System.in);
     public static int tam=1;
@@ -65,6 +67,7 @@ public class Executavel {
 			System.out.println("(3)Listar Cursos;");
 			System.out.println("(4)Listar Colegiados");
 			System.out.println("(5)Listar Estudantes");
+			System.out.println("(6)Listar Alunos de um Curso");
 
 			System.out.println("------------------------");
 			escolha = sc.nextInt();
@@ -87,8 +90,15 @@ public class Executavel {
 				sc.nextLine();
 				System.out.println("Favor, inserir nome do curso que deseja ver os estudantes:");
 				String nomeCurso = sc.nextLine();
-				Lista_Estudantes(nomeCurso);
+				Lista_Alunos_Curso(nomeCurso);
 				break;
+			case 6:
+				sc.nextLine();
+				
+				System.out.println("Favor, inserir o nome do curso que deseja ver");
+				break;
+				
+				/* TESTANDO */
 			default:
 				System.out.println("Entrada invalida!!!!");
 			}
@@ -133,6 +143,9 @@ public static void Menu_Cadastro(){
 				break;
 			case "f":
 				Cadastrar_Estudantes();
+				break;
+			case "g":
+				Cadastra_Alunos_Aula();
 				break;
 			case "1":
 				loop = 1;//quebra do loop;
@@ -241,7 +254,6 @@ public static void Menu_Cadastro(){
 	        	                String nomeDic = sc.next();
 	        	                System.out.println("Digite a carga horaria da materia:");
 	        	                int cargaHorariaDic = sc.nextInt();
-	        	                System.out.println("Selhecionar professor:");
 	        	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
 	        	                disciplinas.add(disciplina);
 	        	                
@@ -454,7 +466,7 @@ public static Professor Cadastro_Professor_Disciplina() {
 		return materia;
 	}
 	
-	public static Curso encontraCurso(String nome) {
+	public static Curso Encontra_Curso(String nome) {
 		Curso curso = null;
 		
 		for(Curso curso_aux : cursos) {
@@ -515,7 +527,7 @@ public static void Cadastro_Automatico() {
 		System.out.println("A qual curso esse colegiado pertence?");
 		String nomeCurso = sc.nextLine();
 		
-		Colegiado colegiado = new Colegiado(encontraCurso(nomeCurso));
+		Colegiado colegiado = new Colegiado(Encontra_Curso(nomeCurso));
 		
 		colegiados.add(colegiado);
 		
@@ -601,7 +613,7 @@ public static void Cadastro_Automatico() {
 	        String nomeCurso = sc.nextLine();
 	        
 	        
-	       Estudante aluno = new Estudante(nome, cpf, dtNascimento, RA, periodo, encontraCurso(nomeCurso));
+	       Estudante aluno = new Estudante(nome, cpf, dtNascimento, RA, periodo, Encontra_Curso(nomeCurso));
 	       
 	       estudantes.add(aluno);
 	       
@@ -630,7 +642,81 @@ public static void Cadastro_Automatico() {
 		for(Estudante aluno : estudantes) {
 			if(nomeCurso.contentEquals(aluno.getCurso().getNomeCurso())) {
 				System.out.println("Aluno(a): " + aluno.getNome());
+				System.out.println("RA: " + aluno.getRA());
 			}
+		}
+	}
+	
+	private static Estudante Encontra_Aluno(String RA) {
+		Estudante estudante = null;
+		
+		for(Estudante aluno : estudantes) {
+			if(RA.equals(aluno.getRA())) {
+				estudante = aluno;
+			}
+		}
+		
+		return estudante;
+	}
+	
+	private static void Cadastra_Alunos_Aula() {
+		
+		
+		/*boolean menu = true;
+		
+		System.out.println("------------Cadastro Alunos Curso-----------");
+		
+		sc.nextLine();
+		System.out.println("A aula será referente a qual curso?");
+		String nomeCurso = sc.nextLine();
+		
+		System.out.println("Seguem os alunos que fazem esse curso:");
+		Lista_Estudantes(nomeCurso);
+		
+		System.out.println("Digite o RA do(a) estudante que deseja adicionar");
+		String RA = sc.nextLine();
+		
+		AlunosCurso alunos_curso = new AlunosCurso(Encontra_Curso(nomeCurso), Encontra_Aluno(RA));
+		alunosCurso.add(alunos_curso);
+
+		do {
+			System.out.println("1 - Adicionar outro(a) estudante");
+			System.out.println("2 - Finalizar criação");
+			int escolha = sc.nextInt();
+			
+			switch(escolha) {
+			case 1:
+				System.out.println("Seguem os alunos que fazem esse curso:");
+				Lista_Estudantes(nomeCurso);
+				
+				System.out.println("Digite o RA do(a) estudante que deseja adicionar");
+				String RA2 = sc.nextLine();
+				alunos_curso.inserirEstudante(Encontra_Aluno(RA2));
+				break;
+			case 2:
+				menu = false;
+				Menu_Cadastro();
+				break;
+			default:
+				System.out.println("Opção inválida");
+				menu = true;
+				break;
+			}
+		} while(menu); */
+	}
+	
+	public static void Lista_Alunos_Curso(String nomeCurso) {
+		HashMap<String,Estudante> listaEstudantes = null;
+		
+		for(AlunosCurso alunos_curso : alunosCurso) {
+			if(alunos_curso.getCurso().getNomeCurso().equals(nomeCurso)) {
+				listaEstudantes = alunos_curso.recuperarListaAlunos();
+			}
+		}
+		
+		for(Estudante estudante : listaEstudantes.values()) {
+			System.out.println("Nome: " + estudante.getNome());
+			System.out.println("RA: " + estudante.getRA());
 		}
 	}
 }
