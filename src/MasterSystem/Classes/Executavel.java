@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Executavel {
 	
-	/* TESTE */
+	/* FUNCIONA CARALHO */
 	
 	public static ArrayList<Professor> professores = new ArrayList<Professor>();
 	public static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
