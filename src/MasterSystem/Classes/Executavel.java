@@ -8,6 +8,7 @@ public class Executavel {
 	public static ArrayList<Professor> professores = new ArrayList<Professor>();
 	public static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
+	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
 	
 	public static Scanner sc = new Scanner(System.in);
     public static int tam=1;
@@ -111,6 +112,9 @@ public static void Menu_Cadastro(){
 				break;
 			case "c":
 				Cadastro_Curso();
+				break;
+			case "e":
+				Cadastro_Colegiado();
 				break;
 			case "1":
 				loop = 1;//quebra do loop;
@@ -216,14 +220,7 @@ public static void Menu_Cadastro(){
 		                	System.out.println("Digite o CPF do professor escolhido: ");
 		                	String escolha = sc.next();
 		                	
-		                	for(int i = 0; i < professores.size() ;i++){
-		                        System.out.print("--dado1--" + professores.get(i).getCpf() + "\n");
-		                        System.out.println("---dados2---"+ escolha);
-		                        
-		                		if (escolha.equals(professores.get(i).getCpf())) {
-		                			professorD = professores.get(i);
-		                		}
-		                	}
+		                	professorD = Encontra_Professor(escolha);
 
 		                	contador++;
 		                	break;
@@ -404,6 +401,19 @@ public static Professor Cadastro_Professor_Disciplina() {
 		}
 		return materia;
 	}
+	
+	public static Curso encontraCurso(String nome) {
+		Curso curso = null;
+		
+		for(Curso curso_aux : cursos) {
+			if(curso_aux.getNomeCurso().equals(nome)) {
+				curso = curso_aux;
+			}
+		}
+		return curso;
+	}
+	
+	
 public static void Cadastro_Automatico() {
 
         String nome = "flavio";
@@ -416,7 +426,7 @@ public static void Cadastro_Automatico() {
         
         String nRegistro = "110"; 
         
-        String titulação = "teste"; 
+        String titulação = "teste";
         
         float horasSemanais = 5;
         
@@ -429,5 +439,51 @@ public static void Cadastro_Automatico() {
          Menu_Principal();
 
         
+	}
+	
+	public static Professor Encontra_Professor(String CPF) {
+		Professor professor = null;
+		
+		for(Professor professor_aux : professores) {
+			if (CPF.equals(professor_aux.getCpf())) {
+    			professor = professor_aux;
+    		}
+		}
+		
+		return professor;
+	}
+
+	public static void Cadastro_Colegiado() {
+		boolean menu = true;
+		Professor professor;
+		
+		System.out.println("------Cadastro de Colegiado-------");
+		
+		sc.nextLine();
+		System.out.println("A qual curso esse colegiado pertence?");
+		String nomeCurso = sc.nextLine();
+		
+		Colegiado colegiado = new Colegiado(encontraCurso(nomeCurso));
+		
+		colegiados.add(colegiado);
+		
+		do {
+			for(int i = 0; i < professores.size() ;i++){
+        		System.out.println("\n--------------------------");
+                System.out.printf("\n -- %d. Professor --\n",contador);
+                System.out.printf("Nome:");
+                System.out.print(professores.get(i).getNome() + "\n");
+                System.out.printf("CPF:");
+                System.out.print(professores.get(i).getCpf() + "\n");
+            } 
+			
+        	System.out.println("Digite o CPF do professor escolhido: ");
+        	String CPF = sc.next();
+        	
+        	Encontra_Professor(CPF);
+
+		} while(menu);
+	}
 }
-}
+
+

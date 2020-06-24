@@ -6,9 +6,8 @@ public class Colegiado {
 	private Curso curso;
 	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	
-	public Colegiado(Curso curso, Professor professor) {
+	public Colegiado(Curso curso) {
 		setCurso(curso);
-		inserirProfessor(professor);
 	}
 	
 	private void setCurso(Curso curso) {
@@ -19,7 +18,7 @@ public class Colegiado {
 		return curso;
 	}
 	
-	private void inserirProfessor(Professor professor) {
+	public void inserirProfessor(Professor professor) {
 		professores.add(professor);
 	}
 	
