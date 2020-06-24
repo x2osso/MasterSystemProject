@@ -16,7 +16,6 @@ public class Executavel {
 	
 	public static void main(String[] args) {
 		Cadastro_Automatico();
-		Menu_Principal();
 	}
 	
 	public static void Menu_Principal() {	
@@ -41,7 +40,8 @@ public class Executavel {
 					Menu_Pesquisas();
 					break;
 				case "3":
-					
+					System.out.println("Sistema Finalizado !!");
+					loop=1;
 					break;
 				default:
 					System.out.println("Entrada invalida !!");
