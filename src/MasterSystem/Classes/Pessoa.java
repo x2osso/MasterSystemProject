@@ -1,29 +1,37 @@
 package MasterSystem.Classes;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Pessoa {
-	String nome;
-	String cpf;
-	Date dtNascimento;
+	private String nome;
+	private String cpf;
+	private LocalDate dtNascimento;
 	
-	public Pessoa() {
-		
+	public Pessoa(String nome, String cpf, LocalDate dtNascimento) {
+		setNome(nome);
+		setCpf(cpf);
+		setDtNascimento(dtNascimento);
 	}
-	public void setNome(String nome) {
+	
+	private void setNome(String nome) {
 		this.nome = nome;
 	}
-	public void setDtNascimento(Date dtNascimento) {
-		this.dtNascimento = dtNascimento;
-	}
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+	
 	public String getNome() {
 		return nome;
 	}
-	public Date getDtNascimento() {
+	
+	private void setDtNascimento(LocalDate dtNascimento) {
+		this.dtNascimento = dtNascimento;
+	}
+	
+	public LocalDate getDtNascimento() {
 		return dtNascimento;
 	}
+	
+	private void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+	
 	public String getCpf() {
 		return cpf;
 	}

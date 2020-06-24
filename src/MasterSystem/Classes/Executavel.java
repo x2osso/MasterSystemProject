@@ -1,13 +1,6 @@
 package MasterSystem.Classes;
-import java.awt.peer.ScrollbarPeer;
-import java.io.ObjectInputStream.GetField;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Scanner;
 
 public class Executavel {
@@ -125,25 +118,30 @@ public static void Menu_Cadastro(){
             System.out.printf("----Cadastro  %d Professor----\n",contador);
             System.out.println("Digite o Nome:");
             String nome = sc.next();
+            
             System.out.println("Digite o cpf:");
             String cpf = sc.next(); 
+            
             System.out.println("Digite data de nascimento:");
             String dataString = sc.next(); 
             String [] dataSeparada = dataString.split("/");
             LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
             System.out.println(dtNascimento);
+            
             System.out.println("Digite registro:");
             String nRegistro = sc.next(); 
+            
             System.out.println("Digite titulação");
             String titulação = sc.next(); 
+            
             System.out.println("Digite horasSemanais");
-            String horasSemanais = sc.next();
+            float horasSemanais = sc.nextFloat();
+            
             System.out.println("Digite precoHora");
-            String precoHora = sc.next();
-            int status = 1;
+            double precoHora = sc.nextDouble();
 
             contador++;
-            Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora,status);
+            Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
             professores.add(professor);
             System.out.println("(1)Cadastrar um novo professor");
             System.out.println("(2)Voltar ao menu de cadastro");
@@ -158,6 +156,7 @@ public static void Menu_Cadastro(){
         }while(loop == 0);
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
 		int escolhaProf;
@@ -264,24 +263,29 @@ public static Professor Cadastro_Professor_Disciplina() {
         System.out.printf("----Cadastro  %d Professor----\n",contador);
         System.out.println("Digite o Nome:");
         String nome = sc.next();
+        
         System.out.println("Digite o cpf:");
         String cpf = sc.next(); 
+        
         System.out.println("Digite data de nascimento:");
         String dataString = sc.next(); 
         String [] dataSeparada = dataString.split("/");
         LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
         System.out.println(dtNascimento);
+        
         System.out.println("Digite registro:");
         String nRegistro = sc.next(); 
+        
         System.out.println("Digite titulação");
         String titulação = sc.next(); 
+        
         System.out.println("Digite horasSemanais");
-        String horasSemanais = sc.next();
+        float horasSemanais = sc.nextFloat();
+        
         System.out.println("Digite precoHora");
-        String precoHora = sc.next();
-        int status = 1;
+        double precoHora = sc.nextDouble();
 
-        Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora,status);
+        Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
         professores.add(professor);
 
         return professor; 

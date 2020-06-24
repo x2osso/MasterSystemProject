@@ -1,30 +1,40 @@
 package MasterSystem.Classes;
 
-public class Estudante {
-	String RA;
-	int periodo;
-	Curso curso;
+import java.time.LocalDate;
+
+public class Estudante extends Pessoa {
+	private String RA;
+	private int periodo;
+	private Curso curso;
 	
-	public Estudante() {
-		
+	public Estudante(String nome, String cpf, LocalDate dtNascimento, String RA, int periodo, Curso curso) {
+		super(nome, cpf, dtNascimento);
+		setRA(RA);
+		setPeriodo(periodo);
+		setCurso(curso);
 	}
-	public void setRA(String rA) {
-		RA = rA;
+	
+	private void setRA(String RA) {
+		this.RA = RA;
 	}
-	public void setPeriodo(int periodo) {
+	
+	public String getRA() {
+		return this.RA;
+	}
+	
+	private void setPeriodo(int periodo) {
 		this.periodo = periodo;
 	}
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-	public String getRA() {
-		return RA;
-	}
+	
 	public int getPeriodo() {
-		return periodo;
-	}
-	public Curso getCurso() {
-		return curso;
+		return this.periodo;
 	}
 	
+	private void setCurso(Curso curso) {
+		this.curso = curso;
+	}
+	
+	public Curso getCurso() {
+		return this.curso;
+	}
 }

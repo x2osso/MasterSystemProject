@@ -3,22 +3,27 @@ package MasterSystem.Classes;
 import java.util.ArrayList;
 
 public class Colegiado {
-	Curso curso;
-	public static ArrayList<Professor> professores = new ArrayList<Professor>();
+	private Curso curso;
+	private ArrayList<Professor> professores = new ArrayList<Professor>();
 	
-	public Colegiado() {
-		
+	public Colegiado(Curso curso, Professor professor) {
+		setCurso(curso);
+		inserirProfessor(professor);
 	}
-	public static void setProfessores(ArrayList<Professor> professores) {
-		Colegiado.professores = professores;
-	}
-	public void setCurso(Curso curso) {
+	
+	private void setCurso(Curso curso) {
 		this.curso = curso;
 	}
-	public static ArrayList<Professor> getProfessores() {
-		return professores;
-	}
+	
 	public Curso getCurso() {
 		return curso;
+	}
+	
+	private void inserirProfessor(Professor professor) {
+		professores.add(professor);
+	}
+	
+	public ArrayList<Professor> recuperarProfessores() {
+		return professores;
 	}
 }

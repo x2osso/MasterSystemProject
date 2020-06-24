@@ -1,35 +1,52 @@
 package MasterSystem.Classes;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 
 public class Aula {
-	String lab;
-	Date dataHora;
-	Disciplina disciplina;
-	Map<String,Estudante> alunosAula;
+	private String lab;
+	private Date dataHora;
+	private Disciplina disciplina;
+	private HashMap<String,Estudante> alunosAula = new HashMap<String, Estudante>();
 	
-	public Aula() {
-		
+	public Aula(String lab, Date dataHora, Disciplina disciplina) {
+		setLab(lab);
+		setDataHora(dataHora);
+		setDisciplina(disciplina);
 	}
-	public void setLab(String lab) {
+	
+	private void setLab(String lab) {
 		this.lab = lab;
 	}
-	public void setDataHora(Date dataHora) {
+	
+	public String getLab() {
+		return this.lab;
+	}
+	
+	private void setDataHora(Date dataHora) {
 		this.dataHora = dataHora;
 	}
-	public String getLab() {
-		return lab;
+	
+	public Date getDataHora() {
+		return this.dataHora;
 	}
+	
+	private void setDisciplina(Disciplina disciplina) {
+		this.disciplina = disciplina;
+	}
+	
 	public Disciplina getDisciplina() {
-		return disciplina;
+		return this.disciplina;
 	}
+	
 	public void addAluno(Estudante aluno) {
-		
+		alunosAula.put(aluno.getRA(), aluno);
 	}
-	public Map<String,Estudante> getListaDeAlunos(){
+	
+	public HashMap<String,Estudante> getListaDeAlunos(){
 		return alunosAula;
 	}
-	public Estudante getAluno(String RA) {/*duvida :(*/
-		return null;
+	
+	public Estudante getAluno(String RA) {
+		return alunosAula.get(RA);
 	}
 }

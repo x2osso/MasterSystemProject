@@ -1,27 +1,32 @@
 package MasterSystem.Classes;
-import java.util.Map;
+import java.util.HashMap;
 
 public class AlunosCurso {
-	Curso curso;
-	Map<String,Estudante> alunosCurso;
+	private Curso curso;
+	private HashMap<String,Estudante> alunosCurso = new HashMap<String, Estudante>();
 	
-	public AlunosCurso() {
-		
+	public AlunosCurso(Curso curso, Estudante estudante) {
+		setCurso(curso);
+		inserirEstudante(estudante);
 	}
-	public void setCurso(Curso curso) {
+	
+	private void setCurso(Curso curso) {
 		this.curso = curso;
 	}
+	
 	public Curso getCurso() {
-		return curso;
-	}
-	public void inserirAluno(Estudante estudante) {
-		
-	}
-	public Map<String,Estudante> recuperarListaAlunos() {
-		return alunosCurso;
-	}
-	public Estudante recuperaAluno(String RA) {/*DUVIDA AQUI GUYS*/
-		return null;
+		return this.curso;
 	}
 	
+	private void inserirEstudante(Estudante estudante) {
+		alunosCurso.put(estudante.getRA(), estudante);
+	}
+	
+	public HashMap<String,Estudante> recuperarListaAlunos() {
+		return alunosCurso;
+	}
+	
+	public Estudante recuperarAluno(String RA) {
+		return alunosCurso.get(RA);
+	}
 }

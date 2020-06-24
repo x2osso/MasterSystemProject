@@ -1,20 +1,28 @@
 package MasterSystem.Classes;
-import java.util.List;
+import java.util.ArrayList;
 
 public class Curso {
-	String nomeCurso;
-	List<Disciplina> disciplinas;
+	private String nomeCurso;
+	private ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	
-	public void setNomeCurso(String nomeCurso) {
+	public Curso(String nomeCurso, Disciplina disciplina) {
+		setNomeCurso(nomeCurso);
+		inserirDisciplina(disciplina);
+	}
+	
+	private void setNomeCurso(String nomeCurso) {
 		this.nomeCurso = nomeCurso;
 	}
-	public void setDisciplinas(List<Disciplina> disciplinas) {
-		this.disciplinas = disciplinas;
-	}
+	
 	public String getNomeCurso() {
 		return nomeCurso;
 	}
-	public List<Disciplina> getDisciplinas() {
+	
+	private void inserirDisciplina(Disciplina disciplina) {
+		this.disciplinas.add(disciplina);
+	}
+	
+	public ArrayList<Disciplina> recuperarDisciplinas() {
 		return disciplinas;
 	}
 }
