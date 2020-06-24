@@ -44,4 +44,37 @@ public class Professor extends Pessoa{
 	public String getHorasSemanais() {
 		return horasSemanais;
 	}
+	@Override
+	public String getNome() {
+		// TODO Auto-generated method stub
+		return super.getNome();
+	}
+	@Override
+	public String getCpf() {
+		// TODO Auto-generated method stub
+		return super.getCpf();
+	}
+	@Override
+	public Date getDtNascimento() {
+		// TODO Auto-generated method stub
+		return super.getDtNascimento();
+	}
+	@Override
+	public void setCpf(String cpf) {
+		// TODO Auto-generated method stub
+		super.setCpf(cpf);
+	}
+	@Override
+	public void setDtNascimento(Date dtNascimento) {
+		// TODO Auto-generated method stub
+		super.setDtNascimento(dtNascimento);
+	}
+	@Override
+	public void setNome(String nome) {
+		// TODO Auto-generated method stub
+		super.setNome(nome);
+	}
+	public String getProfessor() {
+		return getNome();
+	}
 }
