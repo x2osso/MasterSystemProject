@@ -14,6 +14,7 @@ public class Executavel {
     public static int contador =1;
 	
 	public static void main(String[] args) {
+		Cadastro_Automatico();
 		Menu_Principal();
 	}
 	
@@ -51,7 +52,7 @@ public class Executavel {
 	
 	public static void Menu_Pesquisas() {
 		int loop = 0;
-		
+		int escolha=0;
 		do {
 			
 			System.out.println("----MENU DE PESQUISA----");
@@ -59,13 +60,13 @@ public class Executavel {
 			System.out.println("(2)Listar Disciplina;");
 			System.out.println("(3)Listar Cursos;");
 			System.out.println("------------------------");
-			int escolha = sc.nextInt();
+			escolha = sc.nextInt();
 			switch(escolha) {
 			case 1:
 				loop = 1;
 				Lista_Professores();
 				break;
-			case 2:
+			case 2:	
 				loop = 1;
 				Lista_Disciplina();
 				break;
@@ -138,7 +139,7 @@ public static void Menu_Cadastro(){
             System.out.println("Digite o numero de cpf:");
             String cpf = sc.next(); 
             
-            System.out.println("Digite data de nascimento utilizando ' / ' Exemplo:18/08/1998");
+            System.out.println("Digite data de nascimento utilizando ' / ' Exemplo:18/08/1998:");
             String dataString = sc.next(); 
             String [] dataSeparada = dataString.split("/");
             LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
@@ -147,18 +148,19 @@ public static void Menu_Cadastro(){
             System.out.println("Digite o numero de registro:");
             String nRegistro = sc.next(); 
             
-            System.out.println("Digite titulação");
+            System.out.println("Digite titulação:");
             String titulação = sc.next(); 
             
-            System.out.println("Digite Horas Semanais");
+            System.out.println("Digite Horas Semanais:");
             float horasSemanais = sc.nextFloat();
             
-            System.out.println("Digite Preço por Hora, exemplo: 4,50");
+            System.out.println("Digite Preço por Hora, exemplo: 4,50 :");
             double precoHora = sc.nextDouble();
 
             contador++;
             Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
             professores.add(professor);
+    		System.out.println("\n--------------------------");
             System.out.println("(1)Cadastrar um novo professor");
             System.out.println("(2)Voltar ao menu de cadastro");
             escolha = sc.nextInt();
@@ -177,32 +179,56 @@ public static void Menu_Cadastro(){
 		int escolhaProf;
 		Professor professorD = null;
 		do {
-	                System.out.printf("----Cadastro  de  Disciplina----\n");
+	                System.out.printf("\n----Cadastro  de  Disciplina----\n");
 	                System.out.println("Digite o nome da materia:");
 	                String nomeDic = sc.next();
 	                System.out.println("Digite a carga horaria da materia:");
 	                int cargaHorariaDic = sc.nextInt();
 	                System.out.println("Selhecionar professor:");
-	                System.out.println("(1)Cadastrar novo Professor; \n(2)Listar professor;");
+	                System.out.println("(1)Cadastrar novo Professor; \n(2)Selecionar professor utilizando CPF;");
 	                escolhaProf = sc.nextInt();
 	                switch(escolhaProf) {
 	                case 1:
 	                	professorD = Cadastro_Professor_Disciplina();
 	                	break;
 	                case 2:
+	                	if(professores.size() < 1) {
+	                    	System.out.println("!! NENHUMA PROFESSOR CADASTRADO!! ");
+	    	                System.out.println("\n(1)Cadastrar NOVO Professor\n(2)Voltar ao menu principal");
+	    	                int escolha = sc.nextInt();
+	    	                if(escolha == 2) {
+	    	                		loop = 1;
+	    	                		Menu_Principal();
+	    	                }else {
+	    	                	Cadastro_Professor();
+	    	                }
+	                    	
+	                	}else {
+	                		contador=1;
+		                	for(int i = 0; i < professores.size() ;i++){
+		    	        		System.out.println("\n--------------------------");
+		                        System.out.printf("\n -- %d. Professor --\n",contador);
+		                        System.out.printf("Nome:");
+		                        System.out.print(professores.get(i).getNome() + "\n");
+		                        System.out.printf("CPF:");
+		                        System.out.print(professores.get(i).getCpf() + "\n");
+		                    } 
+		                	System.out.println("Digite o CPF do professor escolhido: ");
+		                	String escolha = sc.next();
+		                	
+		                	for(int i = 0; i < professores.size() ;i++){
+		                        System.out.print("--dado1--" + professores.get(i).getCpf() + "\n");
+		                        System.out.println("---dados2---"+ escolha);
+		                        
+		                		if (escolha.equals(professores.get(i).getCpf())) {
+		                			professorD = professores.get(i);
+		                		}
+		                	}
+
+		                	contador++;
+		                	break;
+	                	}
 	                	
-	                	for(int i = 0; i < professores.size() ;i++){
-	                        System.out.printf("\n%d Professor\n",contador);
-	                        System.out.printf("Nome:");
-	                        System.out.print(professores.get(i).getNome() + "\n");
-	                        System.out.printf("CPF:");
-	                        System.out.print(professores.get(i).getCpf() + "\n");
-	                    } 
-	                	System.out.println("Digite o CPF do professor escolhido: ");
-	                	String escolha = sc.next();
-	                	professorD = professores.get(professores.indexOf(escolha));
-	                	/*em teoria ta certo*/
-	                	break;
 	                default:
 	                	System.out.println("Opção invalida!!");
 	                }
@@ -210,7 +236,10 @@ public static void Menu_Cadastro(){
 	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
 	                disciplinas.add(disciplina);
 	                
-	                System.out.println("(1)Cadastrar outra Disciplina\n(2)Voltar ao menu");
+	        		System.out.println("\n--------------------------");
+	        		System.out.println("\n!!! DICIPLINA CADASTRADA COM SUCESSO !!!");
+	        		
+	                System.out.println("\n(1)Cadastrar NOVA Disciplina\n(2)Voltar ao menu principal");
 	                int voltar = sc.nextInt();
 	                if(voltar == 2) {
 	                		loop = 1;
@@ -229,47 +258,62 @@ public static void Menu_Cadastro(){
             int escolhaList = sc.nextInt();
             if(escolhaList==1) {
             	
-            }else {
-            	Menu_Cadastro();
-            }
-        	
+            }   	
         }else{
         	for(int i = 0; i < professores.size() ;i++){
-                System.out.printf("\n%d Professor\n",contador);
+        		System.out.println("--------------------------");
+                System.out.printf("\n -- %d Professor --\n",contador);
                 System.out.printf("Nome:");
                 System.out.print(professores.get(i).getNome() + "\n");
                 System.out.printf("CPF:");
                 System.out.print(professores.get(i).getCpf() + "\n");
                 System.out.printf("Data:");
                 System.out.print(professores.get(i).getDtNascimento() + "\n");
-            } 
+        		System.out.println("\n--------------------------");
+            }
+            System.out.println("(1)Voltar ao menu principal");
+            System.out.println("(2)Voltar ao menu de Pesquisas");
+            int escolha = sc.nextInt();
+            if(escolha==1) {
+            	Menu_Principal();
+            }else {
+				Menu_Pesquisas();
+            }
         }
 	}
 
 	public static void Lista_Disciplina() {
-		
-        if(professores.size() < 1) {
+        if(disciplinas.size() < 1) {
         	System.out.println("!! NENHUMA DICIPLINA CADASTRADA !! ");
-    		System.out.println("\n----Disciplinas Cadastradas----"); 
+    		System.out.println("\n----Digite uma opção----"); 
         	System.out.println("(1)Cadastrar uma nova Disciplina");
-            System.out.println("(2)Voltar ao menu de cadastro");
+            System.out.println("(2)Voltar ao menu principal");
             int escolhaList = sc.nextInt();
             if(escolhaList==1) {
             	Cadastro_Diciplina();
             }else {
-            	Menu_Cadastro();
+            	Menu_Principal();
             }
         	
         }else{
         	for(int i = 0; i < disciplinas.size() ;i++){
-                System.out.printf("\nDisciplinas\n");
+                System.out.println("\n----Diciplinas Cadastradas----"); 
                 System.out.printf("Nome:");
                 System.out.print(disciplinas.get(i).getNome() + "\n");
                 System.out.printf("Carga Horaria:");
                 System.out.print(disciplinas.get(i).getCargaHoraria() + "\n");
                 System.out.printf("Professor:");
-                System.out.println(disciplinas.get(i).getProfessor());/*FUNCIONAAAAAAAAAAAAAAAAAAAA GARAIO*/
+                System.out.println(disciplinas.get(i).getProfessor());
+        		System.out.println("\n--------------------------");
             } 
+            System.out.println("(1)Voltar ao menu principal");
+            System.out.println("(2)Voltar ao menu de Pesquisas");
+            int escolha = sc.nextInt();
+            if(escolha==1) {
+            	Menu_Principal();
+            }else {
+				Menu_Pesquisas();
+            }
         }
 	}
 public static Professor Cadastro_Professor_Disciplina() {
@@ -286,7 +330,6 @@ public static Professor Cadastro_Professor_Disciplina() {
         String dataString = sc.next(); 
         String [] dataSeparada = dataString.split("/");
         LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
-        System.out.println(dtNascimento);
         
         System.out.println("Digite registro:");
         String nRegistro = sc.next(); 
@@ -361,4 +404,30 @@ public static Professor Cadastro_Professor_Disciplina() {
 		}
 		return materia;
 	}
+public static void Cadastro_Automatico() {
+
+        String nome = "flavio";
+     
+        String cpf = "546"; 
+        
+        String dataString = "18/08/1998"; 
+        String [] dataSeparada = dataString.split("/");
+        LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
+        
+        String nRegistro = "110"; 
+        
+        String titulação = "teste"; 
+        
+        float horasSemanais = 5;
+        
+        double precoHora = 5;
+
+        contador++;
+        Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
+        professores.add(professor);
+
+         Menu_Principal();
+
+        
+}
 }
