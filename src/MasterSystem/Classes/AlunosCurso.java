@@ -5,9 +5,9 @@ public class AlunosCurso {
 	private Curso curso;
 	private HashMap<String,Estudante> alunosCurso = new HashMap<String, Estudante>();
 	
-	public AlunosCurso(Curso curso, Estudante estudante) {
+	public AlunosCurso(Curso curso) {
 		setCurso(curso);
-		inserirEstudante(estudante);
+	
 	}
 	
 	private void setCurso(Curso curso) {

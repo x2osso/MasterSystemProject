@@ -95,7 +95,7 @@ public class Executavel {
 				System.out.println("Favor, inserir nome do curso que deseja ver os estudantes:");
 				String nomeCurso = sc.nextLine();
 
-				Lista_Estudantes(nomeCurso);
+				Lista_Alunos_Curso(nomeCurso);
 				break;
 			case 6:
 				Menu_Principal();
@@ -149,7 +149,9 @@ public static void Menu_Cadastro(){
 				Cadastrar_Estudantes();
 				break;
 			case "g":
-				Cadastra_Alunos_Aula();
+				System.out.println("Cadastrando alunos...");
+				Cadastra_Alunos_Curso();
+				System.out.println("Alunos cadastrados");
 				break;
 			case "1":
 				loop = 1;//quebra do loop;
@@ -621,61 +623,20 @@ public static Professor Cadastro_Professor_Disciplina() {
 		}
 	}
 	
-	private static Estudante Encontra_Aluno(String RA) {
-		Estudante estudante = null;
+	private static void Cadastra_Alunos_Curso() {
+		AlunosCurso alunos_curso = null; 
 		
-		for(Estudante aluno : estudantes) {
-			if(RA.equals(aluno.getRA())) {
-				estudante = aluno;
+		for(Curso curso : cursos) {
+			alunos_curso = new AlunosCurso(curso);
+			
+			for(Estudante aluno : estudantes) {
+				if(aluno.getCurso().equals(curso)) {
+					alunos_curso.inserirEstudante(aluno);
+				}
 			}
 		}
-		return estudante;
-	}
-	
-	private static void Cadastra_Alunos_Aula() {
 		
-		
-		/*boolean menu = true;
-		
-		System.out.println("------------Cadastro Alunos Curso-----------");
-		
-		sc.nextLine();
-		System.out.println("A aula será referente a qual curso?");
-		String nomeCurso = sc.nextLine();
-		
-		System.out.println("Seguem os alunos que fazem esse curso:");
-		Lista_Estudantes(nomeCurso);
-		
-		System.out.println("Digite o RA do(a) estudante que deseja adicionar");
-		String RA = sc.nextLine();
-		
-		AlunosCurso alunos_curso = new AlunosCurso(Encontra_Curso(nomeCurso), Encontra_Aluno(RA));
 		alunosCurso.add(alunos_curso);
-
-		do {
-			System.out.println("1 - Adicionar outro(a) estudante");
-			System.out.println("2 - Finalizar criação");
-			int escolha = sc.nextInt();
-			
-			switch(escolha) {
-			case 1:
-				System.out.println("Seguem os alunos que fazem esse curso:");
-				Lista_Estudantes(nomeCurso);
-				
-				System.out.println("Digite o RA do(a) estudante que deseja adicionar");
-				String RA2 = sc.nextLine();
-				alunos_curso.inserirEstudante(Encontra_Aluno(RA2));
-				break;
-			case 2:
-				menu = false;
-				Menu_Cadastro();
-				break;
-			default:
-				System.out.println("Opção inválida");
-				menu = true;
-				break;
-			}
-		} while(menu); */
 	}
 	
 	public static void Lista_Alunos_Curso(String nomeCurso) {
