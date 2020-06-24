@@ -9,6 +9,7 @@ public class Executavel {
 	public static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
 	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
+	public static ArrayList<Estudante> estudantes = new ArrayList<Estudante>();
 	
 	public static Scanner sc = new Scanner(System.in);
     public static int tam=1;
@@ -116,6 +117,9 @@ public static void Menu_Cadastro(){
 			case "e":
 				Cadastro_Colegiado();
 				break;
+			case "f":
+				Cadastro_Estudante();
+				break;
 			case "1":
 				loop = 1;//quebra do loop;
 				Menu_Principal();
@@ -135,8 +139,9 @@ public static void Menu_Cadastro(){
         int loop = 0;
         int escolha = 0;
 
+
         do {
-            System.out.printf("\n\n----Cadastro  %d Professor----\n",contador);
+            System.out.printf("\n\n----Cadastro  Estudante----\n",contador);
             System.out.println("Digite o Nome:");
             String nome = sc.next();
             
@@ -177,19 +182,59 @@ public static void Menu_Cadastro(){
             
         }while(loop == 0);
 	}
+	public static void Cadastro_Estudante() {
+        int loop = 0;
+        int escolha = 0;
+        Curso cursoE = null;
+
+        do {
+            System.out.printf("\n\n----Cadastro  %d Professor----\n",contador);
+            System.out.println("Digite o Nome:");
+            String nome = sc.next();
+            
+            System.out.println("Digite o numero de cpf:");
+            String cpf = sc.next(); 
+            
+            System.out.println("Digite data de nascimento utilizando ' / ' Exemplo:18/08/1998:");
+            String dataString = sc.next(); 
+            String [] dataSeparada = dataString.split("/");
+            LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
+
+            System.out.println("Digite o RA:");
+            String RA = sc.next(); 
+            
+            System.out.println("Digite o perido:");
+            Integer periodo = sc.nextInt(); 
+            
+            Lista_Cursos();
+        	System.out.println("Digite o nome do curso: ");
+        	String escolhaCurso = sc.next();
+            
+            
+            contador++;
+            Estudante estudante = new Estudante(nome, cpf,dtNascimento,RA,periodo,cursoE);
+            estudantes.add(estudante);
+    		System.out.println("\n--------------------------");
+            System.out.println("(1)Cadastrar um novo estudante");
+            System.out.println("(2)Voltar ao menu de cadastro");
+            escolha = sc.nextInt();
+            if(escolha==1) {
+
+            }else {
+                loop = 1;
+                Menu_Cadastro();
+            }
+            
+        }while(loop == 0);
+	}
 	
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
 		int escolhaProf;
 		Professor professorD = null;
 		do {
-	                System.out.printf("\n----Cadastro  de  Disciplina----\n");
-	                System.out.println("Digite o nome da materia:");
-	                String nomeDic = sc.next();
-	                System.out.println("Digite a carga horaria da materia:");
-	                int cargaHorariaDic = sc.nextInt();
-	                System.out.println("Selhecionar professor:");
-	                System.out.println("(1)Cadastrar novo Professor; \n(2)Selecionar professor utilizando CPF;");
+					System.out.println("\nPara Cadastro de diciplina e necessario ter professores cadastrados");
+	                System.out.println("\n(1)Cadastrar novo Professor; \n(2)Selecionar professor utilizando CPF");
 	                escolhaProf = sc.nextInt();
 	                switch(escolhaProf) {
 	                case 1:
@@ -220,8 +265,26 @@ public static void Menu_Cadastro(){
 		                	System.out.println("Digite o CPF do professor escolhido: ");
 		                	String escolha = sc.next();
 		                	
-		                	professorD = Encontra_Professor(escolha);
-
+		                	for(int i = 0; i < professores.size() ;i++) {
+		            			if(escolha.equals(professores.get(i).getCpf())) {
+				                	professorD = professores.get(i);
+		        	                System.out.printf("\n----Cadastro  de  Disciplina----\n");
+		        	                System.out.println("Digite o nome da materia:");
+		        	                String nomeDic = sc.next();
+		        	                System.out.println("Digite a carga horaria da materia:");
+		        	                int cargaHorariaDic = sc.nextInt();
+		        	                System.out.println("Selhecionar professor:");
+		        	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
+		        	                disciplinas.add(disciplina);
+		        	                
+		        	        		System.out.println("\n--------------------------");
+		        	        		System.out.println("\n!!! DICIPLINA CADASTRADA COM SUCESSO !!!");
+		            			}else {
+		            				System.out.println("!! PROFESSOR NAO ENCONTRADO !!");
+		            				Cadastro_Diciplina();
+		            			}
+		            		}
+		                	
 		                	contador++;
 		                	break;
 	                	}
@@ -229,12 +292,6 @@ public static void Menu_Cadastro(){
 	                default:
 	                	System.out.println("Opção invalida!!");
 	                }
-	                
-	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
-	                disciplinas.add(disciplina);
-	                
-	        		System.out.println("\n--------------------------");
-	        		System.out.println("\n!!! DICIPLINA CADASTRADA COM SUCESSO !!!");
 	        		
 	                System.out.println("\n(1)Cadastrar NOVA Disciplina\n(2)Voltar ao menu principal");
 	                int voltar = sc.nextInt();
@@ -367,7 +424,7 @@ public static Professor Cadastro_Professor_Disciplina() {
 			
 			Disciplina disciplina = encontraDisciplina(nomeDisciplina);
 			
-			
+		
 			curso.inserirDisciplina(disciplina);
 			
 			System.out.println("1 - Adicionar nova diciplina");
@@ -391,28 +448,7 @@ public static Professor Cadastro_Professor_Disciplina() {
 		}
 	}
 	
-	public static Disciplina encontraDisciplina(String nome) {
-		Disciplina materia = null;
-		
-		for(Disciplina disciplina : disciplinas) {
-			if(disciplina.getNome().equals(nome)) {
-				materia = disciplina;
-			}
-		}
-		return materia;
-	}
-	
-	public static Curso encontraCurso(String nome) {
-		Curso curso = null;
-		
-		for(Curso curso_aux : cursos) {
-			if(curso_aux.getNomeCurso().equals(nome)) {
-				curso = curso_aux;
-			}
-		}
-		return curso;
-	}
-	
+
 	
 public static void Cadastro_Automatico() {
 
@@ -443,7 +479,6 @@ public static void Cadastro_Automatico() {
 	
 	public static Professor Encontra_Professor(String CPF) {
 		Professor professor = null;
-		
 		for(Professor professor_aux : professores) {
 			if (CPF.equals(professor_aux.getCpf())) {
     			professor = professor_aux;
@@ -451,6 +486,28 @@ public static void Cadastro_Automatico() {
 		}
 		
 		return professor;
+	}
+	
+	public static Curso encontraCurso(String nome) {
+		Curso curso = null;
+		
+		for(Curso curso_aux : cursos) {
+			if(curso_aux.getNomeCurso().equals(nome)) {
+				curso = curso_aux;
+			}
+		}
+		return curso;
+	}
+	
+	public static Disciplina encontraDisciplina(String nome) {
+		Disciplina materia = null;
+		
+		for(Disciplina disciplina : disciplinas) {
+			if(disciplina.getNome().equals(nome)) {
+				materia = disciplina;
+			}
+		}
+		return materia;
 	}
 
 	public static void Cadastro_Colegiado() {
