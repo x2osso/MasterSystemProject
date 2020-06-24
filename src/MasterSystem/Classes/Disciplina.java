@@ -22,8 +22,8 @@ public class Disciplina {
 	public void setCargaHoraria(int cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
-	public Professor getProfessor() {
-		return professor;
+	public String getProfessor() {
+		return professor.getProfessor();
 	}
 	public String getNome() {
 		return nome;
