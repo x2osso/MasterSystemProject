@@ -2,7 +2,10 @@ package MasterSystem.Classes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Executavel {
 	
@@ -69,6 +72,7 @@ public class Executavel {
 			System.out.println("(3)Listar Cursos;");
 			System.out.println("(4)Listar Colegiados");
 			System.out.println("(5)Listar Estudantes");
+			System.out.println("(7)Listar Aulas");
 			System.out.println("------------------------");
 			System.out.println("(6)Voltar ao Menu Principal");
 			System.out.println("(0)Encerrar Sistema");
@@ -100,9 +104,10 @@ public class Executavel {
 				break;
 			case 6:
 				Menu_Principal();
-
 				break;
-				
+			case 7:
+				Lista_Aula();
+				break;
 				/* TESTANDO */
 			default:
 				System.out.println("Entrada invalida!!!!");
@@ -153,6 +158,9 @@ public static void Menu_Cadastro(){
 				System.out.println("Cadastrando alunos...");
 				Cadastra_Alunos_Curso();
 				System.out.println("Alunos cadastrados");
+				break;
+			case "d":
+				Cria_Aula();
 				break;
 			case "1":
 				loop = 1;//quebra do loop;
@@ -717,16 +725,16 @@ public static Professor Cadastro_Professor_Disciplina() {
         	
         	switch(escolha) {
         	case 1:
+        		sc.nextLine();
         		menu = true;
         		break;
         	case 2:
+                aulas.add(aula);
         		Menu_Cadastro();
         		menu = false;
         		break;
         	}
         } while(menu);
-        
-        aulas.add(aula);
 	}
 	
 	private static Estudante Encontra_Estudante(String RA) {
@@ -740,7 +748,28 @@ public static Professor Cadastro_Professor_Disciplina() {
 		return estudante;
 	}
 		
-	
+	private static void Lista_Aula() {
+		for(Aula aula : aulas) {
+			
+			Map<String, Estudante> estudantes_ordenados = new TreeMap<>();
+			estudantes_ordenados.putAll(aula.getListaDeAlunos());
+			
+			System.out.println("Data: " + aula.getDataHora() + ", no laboratório: " + aula.getLab());
+			System.out.println("Disciplina: " + aula.getDisciplina().getNome() + ", regida por: " + aula.getDisciplina().getProfessor());
+			System.out.println("Lista de alunos:");
+			
+			System.out.println("Aluno: " + aula.getAluno("11").getNome());
+			
+			 Iterator iterator = estudantes_ordenados.entrySet().iterator();  
+		       
+		     while (iterator.hasNext()) {  
+		         Map.Entry entry = (Map.Entry) iterator.next();  
+		         
+		         System.out.println("RA:" + entry.getKey() + ", Nome: " + entry.getValue().toString());
+		     }
+		     System.out.println();
+		}
+	}
 	
 	
 	

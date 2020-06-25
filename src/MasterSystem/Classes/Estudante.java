@@ -37,4 +37,8 @@ public class Estudante extends Pessoa {
 	public Curso getCurso() {
 		return this.curso;
 	}
+	
+	public String toString() {
+		return this.getNome();
+	}
 }
