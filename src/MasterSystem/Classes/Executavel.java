@@ -75,6 +75,8 @@ public class Executavel {
 			escolha = sc.nextInt();
 			switch(escolha) {
 			case 0:
+				System.out.println("Sistema Finalizado !!!!!");
+				loop = 1;
 				break;
 			case 1:
 				loop = 1;
@@ -451,6 +453,7 @@ public class Executavel {
 	}
 	
 	public static void Lista_Cursos() {
+		
 		if(cursos.size() < 1) {
 			System.out.println("NENHUM CURSO CADASTRADO!!!");
 			System.out.println("1 - Cadastrar novo Curso");
@@ -471,18 +474,31 @@ public class Executavel {
 				break;
 			}
 		}
-		
+		System.out.println("----Cursos Cadastrados----"); 
 		for(Curso curso : cursos) {
-			System.out.println("Nome:" + curso.getNomeCurso());
+			System.out.println("\nNome do Curso :" + curso.getNomeCurso());
+			System.out.println("\n--------------------------"); 
 		}
 	}
 	
 	public static Disciplina encontraDisciplina(String nome) {
 		Disciplina materia = null;
-		
+		int aux = 0;
 		for(Disciplina disciplina : disciplinas) {
 			if(disciplina.getNome().equals(nome)) {
 				materia = disciplina;
+				aux = 1;
+			}
+			
+		}
+		if(aux == 0){
+			System.out.println("Disciplina nao cadastrada\nDeseja cadastrar uma disciplina ?(1)\n"
+					+ "Voltar ao menu pricipal(2)");
+			int esc = sc.nextInt();
+			if(esc == 1) {
+				Cadastro_Diciplina();
+			}else {
+				Menu_Principal();
 			}
 		}
 		return materia;
@@ -766,8 +782,7 @@ public class Executavel {
 	
 	
 	
-	
-	
+	/*nao dessa*/
 	
 	
 	
