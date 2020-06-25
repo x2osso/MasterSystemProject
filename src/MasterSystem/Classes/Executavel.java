@@ -532,7 +532,37 @@ public class Executavel {
 		Professor professor;
 		
 		System.out.println("------Cadastro de Colegiado-------");
-		
+		System.out.println("\nPara Cadastro de colegiado e necessario ter cursos cadastrados");
+        System.out.println("\n(1)Cadastrar novo curso; \n(2)Selecionar curso");
+        int escolhaCur = sc.nextInt();
+        switch(escolhaCur) {
+        case 1:
+        	Cadastro_Curso();
+        	break;
+        case 2:
+        	if(cursos.size() < 1) {
+        		System.out.println("Nenhum curso cadastrado !!!");
+        		System.out.println("(1)Deseja cadastrar curso\n(2)Voltar ao menu principal");
+        		int esc = sc.nextInt();
+        		if(esc == 1) {
+        			Cadastro_Curso();
+        		}else {
+        			Menu_Principal();
+        		}
+        	}else {
+        		int contador = 1;
+        		System.out.println("\n-------------Cursos cadastrados-------------"); 
+        		for(Curso curso : cursos) {
+        			System.out.println("Curso: "+contador);
+        			System.out.println("\nNome do Curso :" + curso.getNomeCurso());
+        			System.out.println("\n--------------------------"); 
+        			contador++;
+        		}
+        	}
+        	break;
+        default:
+        	System.out.println("Entrada invalida !!!!!!");
+        }
 		sc.nextLine();
 		System.out.println("A qual curso esse colegiado pertence?");
 		String nomeCurso = sc.nextLine();
