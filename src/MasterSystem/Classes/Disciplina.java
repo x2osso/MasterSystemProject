@@ -15,8 +15,8 @@ public class Disciplina {
 		this.professor = professor;
 	}
 	
-	public String getProfessor() {
-		return professor.getProfessor();
+	public Professor getProfessor() {
+		return this.professor;
 	}
 	
 	private void setNome(String nome) {

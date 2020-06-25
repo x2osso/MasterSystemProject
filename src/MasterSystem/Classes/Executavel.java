@@ -2,8 +2,10 @@ package MasterSystem.Classes;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -12,8 +14,8 @@ public class Executavel {
 	
 	/* FUNCIONA CARALHO */
 	
-	public static ArrayList<Professor> professores = new ArrayList<Professor>();
-	public static ArrayList<Disciplina> disciplinas = new ArrayList<Disciplina>();
+	public static List<Professor> professores = new ArrayList<Professor>();
+	public static List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
 	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
 	public static ArrayList<Estudante> estudantes = new ArrayList<Estudante>();
@@ -21,7 +23,6 @@ public class Executavel {
 	public static ArrayList<Aula> aulas = new ArrayList<Aula>();
 	
 	public static Scanner sc = new Scanner(System.in);
-    public static int tam=1;
     public static int contador =1;
 	
 	public static void main(String[] args) {
@@ -89,18 +90,24 @@ public class Executavel {
 				break;
 			case 2:	
 				loop = 1;
-				Lista_Disciplina();
+				sc.nextLine();
+				System.out.println("De qual curso gostaria de ver as disciplinas?");
+				String nomeCurso = sc.nextLine();
+				Lista_Disciplina(nomeCurso);
 				break;
 			case 3:
 				Lista_Cursos();
 				break;
 			case 4:
-				Lista_Colegiado();
+				sc.nextLine();
+				System.out.println("Favor, inserir nome do curso que deseja ver os estudantes:");
+				nomeCurso = sc.nextLine();
+				Lista_Colegiado(nomeCurso);
 				break;
 			case 5:
 				sc.nextLine();
 				System.out.println("Favor, inserir nome do curso que deseja ver os estudantes:");
-				String nomeCurso = sc.nextLine();
+				nomeCurso = sc.nextLine();
 
 				Lista_Alunos_Curso(nomeCurso);
 				break;
@@ -248,8 +255,8 @@ public class Executavel {
     	                		loop = 1;
     	                		Menu_Principal();
     	               }else{
-    	                		Cadastro_Professor();
-    	                }
+    	            	   Cadastro_Professor_Disciplina();
+    	               }
                     	
                    }else{
                 		contador=1;
@@ -356,7 +363,7 @@ public class Executavel {
         }
 	}
 
-	public static void Lista_Disciplina() {
+	public static void Lista_Disciplina(String nomeCurso) {
         if(disciplinas.size() < 1) {
         	System.out.println("!! NENHUMA DICIPLINA CADASTRADA !! ");
     		System.out.println("\n----Digite uma opção----"); 
@@ -370,6 +377,30 @@ public class Executavel {
             }
         	
         }else{
+        	for(Curso curso : cursos) {
+        		if(curso.getNomeCurso().equals(nomeCurso)) {
+        			ArrayList<Disciplina> materias = curso.recuperarDisciplinas();
+        			
+        			Collections.sort(materias, new Comparator<Disciplina>() {
+        				@Override
+        				public int compare(Disciplina materia1, Disciplina materia2) {
+        					return materia1.getNome().compareTo(materia2.getNome());
+        				}
+        			});
+        			
+        			System.out.println("Curso: " + nomeCurso);
+        			System.out.println("Disciplinas: ");
+        			System.out.println();
+        			
+        			for(Disciplina materia : materias) {
+        				System.out.println("Nome: " + materia.getNome());
+        				System.out.println("Carga horária: " + materia.getCargaHoraria());
+        				System.out.println("Professor: " + materia.getProfessor().getNome() + ", com o título: " + materia.getProfessor().getTitulação ());
+        				
+        			}
+        		}
+        	}
+        	
         	
         	for(int i = 0; i < disciplinas.size() ;i++){
                 System.out.println("\n----Diciplinas Cadastradas----"); 
@@ -386,7 +417,6 @@ public class Executavel {
    
 	public static Professor Cadastro_Professor_Disciplina() {
 
-   
         System.out.printf("----Cadastro  %d Professor----\n",contador);
         System.out.println("Digite o Nome:");
         String nome = sc.next();
@@ -430,7 +460,7 @@ public class Executavel {
 		
 		System.out.println("Quais disciplinas gostaria de adicionar ao curso?");
 		System.out.println("Segue as existentes: ");
-		Lista_Disciplina();
+		Lista_Disciplina(nomeCurso);
 		
 		do {
 			System.out.println("Digite o nome da disciplina desejada:");
@@ -604,18 +634,32 @@ public class Executavel {
 
 }
 
-
-	
-	public static void Lista_Colegiado() {
+	public static void Lista_Colegiado(String nomeCurso) {
 		if(colegiados.size() < 1) {
 			System.out.println("!! NENHUM COLEGIADO CADASTRADO !!");
-			
 		}else {
+			
+			Collections.sort(professores, new Comparator<Professor>() {
+				@Override
+				public int compare(Professor professor1, Professor professor2) {
+					return professor1.getNome().compareTo(professor2.getNome());
+				}
+			});
+			
 			for(Colegiado colegiado : colegiados) {
-				System.out.println("Curso: " + colegiado.getCurso().getNomeCurso());
-				
-				for(Professor professor : colegiado.recuperarProfessores()) {
-					System.out.println("Professor(a): " + professor.getNome());
+				if(colegiado.getCurso().getNomeCurso().equals(nomeCurso)) {
+					System.out.println("Curso: " + colegiado.getCurso().getNomeCurso());
+					System.out.println("Professores do curso:");
+					System.out.println();
+					
+					for(Professor professor : professores) {
+						System.out.println("Nome: " + professor.getNome());
+						System.out.println("Titulação:" + professor.getTitulação());
+						System.out.println("Horas semanais: " + professor.getHorasSemanais());
+						System.out.println();
+						System.out.println("------------------------------");
+						System.out.println();
+					}
 				}
 			}
 		}
@@ -680,15 +724,6 @@ public class Executavel {
 		} while (menu);
 	}
 	
-	public static void Lista_Estudantes(String nomeCurso) {
-		for(Estudante aluno : estudantes) {
-			if(nomeCurso.contentEquals(aluno.getCurso().getNomeCurso())) {
-				System.out.println("Aluno(a): " + aluno.getNome());
-				System.out.println("RA: " + aluno.getRA());
-			}
-		}
-	}
-	
 	private static void Cadastra_Alunos_Curso() {
 		AlunosCurso alunos_curso = null; 
 		
@@ -706,15 +741,15 @@ public class Executavel {
 	}
 	
 	public static void Lista_Alunos_Curso(String nomeCurso) {
-		HashMap<String,Estudante> listaEstudantes = null;
+		Map<String, Estudante> estudantes_ordenados = new TreeMap<>();
 		
 		for(AlunosCurso alunos_curso : alunosCurso) {
 			if(alunos_curso.getCurso().getNomeCurso().equals(nomeCurso)) {
-				listaEstudantes = alunos_curso.recuperarListaAlunos();
+				estudantes_ordenados.putAll(alunos_curso.recuperarListaAlunos());
 			}
 		}
 		
-		for(Estudante estudante : listaEstudantes.values()) {
+		for(Estudante estudante : estudantes_ordenados.values()) {
 			System.out.println("Nome: " + estudante.getNome());
 			System.out.println("RA: " + estudante.getRA());
 		}
@@ -742,7 +777,7 @@ public class Executavel {
         LocalDate  dtAula = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
         
         System.out.println("Disciplinas existentes:");
-        Lista_Disciplina();
+        Lista_Disciplina(nomeCurso);
         
         String nomeDisciplina = ""; 
         do {
@@ -873,6 +908,7 @@ public class Executavel {
         Cadastro_Automatico_Disciplina();
       
 	}
+	
 	public static void Cadastro_Automatico_Disciplina() {
 		Professor professorD = null;
 		String escolha = "546";
