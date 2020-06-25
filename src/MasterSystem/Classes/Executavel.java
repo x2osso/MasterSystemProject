@@ -439,21 +439,20 @@ public class Executavel {
 			
 			curso.inserirDisciplina(disciplina);
 			System.out.println("!! CURSO CADASTRADO COM SUCESSO !!");
-			System.out.println("1 - Adicionar nova disciplina");
-			System.out.println("2 - Voltar ao menu de cadastro");
+			System.out.println("1 - Adicionar NOVO curso");
+			System.out.println("2 - Voltar ao menu principal");
 			int escolha = sc.nextInt();
 			
 			switch(escolha) {
 			case 1:
-				menu = true;
+				Cadastro_Curso();
 				break;
 			case 2:
-				menu = false;
-				Menu_Cadastro();
+				Menu_Principal();
 				break;
 			default: 
-				System.out.println("Opção inválida. Retornando ao menu de cadastro");
-				Menu_Cadastro();
+				System.out.println("Opção inválida. Retornando ao menu Principal");
+				Menu_Principal();
 				break;
 			}
 			
@@ -536,7 +535,6 @@ public class Executavel {
 	}
 
 	public static void Cadastro_Colegiado() {
-		boolean menu = true;
 		Professor professor;
 		
 		System.out.println("------Cadastro de Colegiado-------");
@@ -560,61 +558,48 @@ public class Executavel {
         	}else {
         		int contador = 1;
         		System.out.println("\n-------------Cursos cadastrados-------------"); 
-        		for(Curso curso : cursos) {
+        		for(int i = 0; i < cursos.size() ;i++) {
         			System.out.println("Curso: "+contador);
-        			System.out.println("\nNome do Curso :" + curso.getNomeCurso());
+                    System.out.print("Nome:"+cursos.get(i).getNomeCurso() + "\n");
         			System.out.println("\n--------------------------"); 
         			contador++;
         		}
+        		System.out.println("Nome do curso que esse colegiado pertence?");
+        		String nomeCurso = sc.next();
+        		
+        		contador =1;
+        		System.out.println("\n-------------Professores cadastrados-------------"); 
+            	for(int i = 0; i < professores.size() ;i++){
+                    System.out.printf("\n %d. Professor\n",contador);
+                    System.out.printf("Nome:");
+                    System.out.print(professores.get(i).getNome() + "\n");
+                    System.out.printf("CPF:");
+                    System.out.print(professores.get(i).getCpf() + "\n");
+                    contador++;
+                } 
+                System.out.println("Digite o CPF do professor escolhido: ");
+                String CPF = sc.next();
+                
+        		Colegiado colegiado = new Colegiado(Encontra_Curso(nomeCurso));	
+        		colegiados.add(colegiado);
+                professor = Encontra_Professor(CPF);
+                colegiado.inserirProfessor(professor);
+                
+        		System.out.println("\n--------------------------");
+        		System.out.println("\n!!! COLEGIADO CADASTRADO COM SUCESSO !!!");
+                System.out.println("\n(1)Cadastrar NOVO colegiado\n(2)Voltar ao menu principal");
+                int voltar = sc.nextInt();
+                if(voltar == 1) {     		
+                		Cadastro_Colegiado();
+                }else {
+                	Menu_Principal();
+                }
         	}
         	break;
         default:
         	System.out.println("Entrada invalida !!!!!!");
         }
-		sc.nextLine();
-		System.out.println("A qual curso esse colegiado pertence?");
-		String nomeCurso = sc.nextLine();
-		
-		Colegiado colegiado = new Colegiado(Encontra_Curso(nomeCurso));
-		
-		colegiados.add(colegiado);
-		
-		do {
-			for(int i = 0; i < professores.size() ;i++){
-        		System.out.println("\n--------------------------");
-                System.out.printf("\n -- %d. Professor --\n",contador);
-                System.out.printf("Nome:");
-                System.out.print(professores.get(i).getNome() + "\n");
-                System.out.printf("CPF:");
-                System.out.print(professores.get(i).getCpf() + "\n");
-            } 
-			
-        	System.out.println("Digite o CPF do professor escolhido: ");
-        	String CPF = sc.next();
-        	
-        	professor = Encontra_Professor(CPF);
-        	colegiado.inserirProfessor(professor);
-        	
-        	
-			System.out.println("1 - Adicionar novo professor");
-			System.out.println("2 - Finalizar cadastro do colegiado");
-			int escolha = sc.nextInt();
-			
-			switch(escolha) {
-			case 1:
-				menu = true;
-				break;
-			case 2:
-				menu = false;
-				Menu_Cadastro();
-				break;
-			default: 
-				System.out.println("Opção inválida. Retornando ao menu de cadastro");
-				Menu_Cadastro();
-				break;
-			}
 
-		} while(menu);
 	}
 	
 	public static void Lista_Colegiado() {
@@ -841,16 +826,7 @@ public class Executavel {
 	
 	
 	
-	/*nao dessa*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*Dados para teste*/
 	
 	public static void Cadastro_Automatico_Professor() {
 
