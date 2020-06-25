@@ -22,7 +22,6 @@ public class Executavel {
 	
 	public static void main(String[] args) {
 		Cadastro_Automatico_Professor();
-		Cadastro_Automatico_Disciplina();
 	}
 	
 	public static void Menu_Principal() {	
@@ -333,6 +332,7 @@ public class Executavel {
                 System.out.printf("Data:");
                 System.out.print(professores.get(i).getDtNascimento() + "\n");
         		System.out.println("\n--------------------------");
+        		contador++;
             }
             System.out.println("(1)Voltar ao menu principal");
             System.out.println("(2)Voltar ao menu de Pesquisas");
