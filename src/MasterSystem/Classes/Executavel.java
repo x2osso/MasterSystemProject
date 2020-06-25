@@ -25,12 +25,11 @@ public class Executavel {
 	
 	public static void main(String[] args) {
 		Cadastro_Automatico_Professor();
-		Cadastro_Automatico_Disciplina();
 	}
 	
 	public static void Menu_Principal() {	
 		int loop = 0;
-		String escolha;
+		int escolha;
 		do {
 			System.out.println("\n\n-----Menu-Principal-----");
 			System.out.println("     (1)Cadastros;");
@@ -38,18 +37,18 @@ public class Executavel {
 			System.out.println("     (3)Exit;");
 			System.out.println("------------------------");
 			System.out.println("Digite uma Opcao:");
-			escolha = sc.next();
+			escolha = sc.nextInt();
 			
 			switch(escolha) {
-				case "1":
+				case 1:
 					loop = 1;//quebra do loop;
 					Menu_Cadastro();
 					break;
-				case "2":
+				case 2:
 					loop = 1;//quebra do loop;
 					Menu_Pesquisas();
 					break;
-				case "3":
+				case 3:
 					System.out.println("Sistema Finalizado !!");
 					loop=1;
 					break;
@@ -80,6 +79,8 @@ public class Executavel {
 			escolha = sc.nextInt();
 			switch(escolha) {
 			case 0:
+				System.out.println("Sistema Finalizado !!!!!");
+				loop = 1;
 				break;
 			case 1:
 				loop = 1;
@@ -117,7 +118,7 @@ public class Executavel {
 		}while(loop == 0);
 	}
 	
-public static void Menu_Cadastro(){
+	public static void Menu_Cadastro(){
 		int loop = 0;
 		String escolha;
 		
@@ -227,6 +228,7 @@ public static void Menu_Cadastro(){
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
 		int escolhaProf;
+		int aux = 0;
 		Professor professorD = null;
 		do {
 				System.out.println("\nPara Cadastro de diciplina e necessario ter professores cadastrados");
@@ -244,11 +246,11 @@ public static void Menu_Cadastro(){
     	                if(escolha == 2) {
     	                		loop = 1;
     	                		Menu_Principal();
-    	                }else {
-    	                	Cadastro_Professor();
+    	               }else{
+    	                		Cadastro_Professor();
     	                }
                     	
-                	}else {
+                   }else{
                 		contador=1;
 	                	for(int i = 0; i < professores.size() ;i++){
 	    	        		System.out.println("\n--------------------------");
@@ -257,32 +259,53 @@ public static void Menu_Cadastro(){
 	                        System.out.print(professores.get(i).getNome() + "\n");
 	                        System.out.printf("CPF:");
 	                        System.out.print(professores.get(i).getCpf() + "\n");
+	                        contador++;
 	                    } 
 	                	System.out.println("Digite o CPF do professor escolhido: ");
 	                	String escolha = sc.next();
 	                	
 	                	for(int i = 0; i < professores.size() ;i++) {
-	            			if(escolha.equals(professores.get(i).getCpf())) {
-			                	professorD = professores.get(i);
-	        	                System.out.printf("\n----Cadastro  de  Disciplina----\n");
-	        	                System.out.println("Digite o nome da materia:");
-	        	                String nomeDic = sc.next();
-	        	                System.out.println("Digite a carga horaria da materia:");
-	        	                int cargaHorariaDic = sc.nextInt();
-	        	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
-	        	                disciplinas.add(disciplina);
-	        	                
-	        	        		System.out.println("\n--------------------------");
-	        	        		System.out.println("\n!!! DICIPLINA CADASTRADA COM SUCESSO !!!");
-	            			}else {
-	            				System.out.println("!! PROFESSOR NAO ENCONTRADO !!");
-	            				Cadastro_Diciplina();
-	            			}
+	                		
+	                		  System.out.print(professores.get(i).getCpf() + "\n");
+		            			if(escolha.equals(professores.get(i).getCpf())) {
+				                	professorD = professores.get(i);
+		        	                System.out.printf("\n----Cadastro  de  Disciplina----\n");
+		        	                System.out.println("Digite o nome da materia:");
+		        	                String nomeDic = sc.next();
+		        	                System.out.println("Digite a carga horaria da materia:");
+		        	                int cargaHorariaDic = sc.nextInt();
+		        	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
+		        	                disciplinas.add(disciplina);
+		        	                
+		        	        		System.out.println("\n--------------------------");
+		        	        		System.out.println("\n!!! DISCIPLINA CADASTRADA COM SUCESSO !!!");
+		        	        		aux=1;
+		            			}
+		            		}
+		                	
+		                	if(aux==0) {
+		                		System.out.println("!!! PROFESSOR NAO ENCONTRADO !!!");
+		                		System.out.println("Cadastrar professor(1)\nVoltar ao menu pricipal(2)");
+		                		int esc = sc.nextInt();
+		                		if(esc == 1) {
+		                			    professorD = Cadastro_Professor_Disciplina();
+		                			    System.out.printf("\n----Cadastro  de  Disciplina----\n");
+			        	                System.out.println("Digite o nome da materia:");
+			        	                String nomeDic = sc.next();
+			        	                System.out.println("Digite a carga horaria da materia:");
+			        	                int cargaHorariaDic = sc.nextInt();
+			        	                Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);
+			        	                disciplinas.add(disciplina);
+			        	                
+			        	        		System.out.println("\n--------------------------");
+			        	        		System.out.println("\n!!! DISCIPLINA CADASTRADA COM SUCESSO !!!");
+		                		}else {
+		                			Menu_Principal();
+		                		}
+		                	}
 	            		}
-	                	
-	                	contador++;
 	                	break;
-                	}
+                	
                 	
                 default:
                 	System.out.println("Opção invalida!!");
@@ -319,6 +342,7 @@ public static void Menu_Cadastro(){
                 System.out.printf("Data:");
                 System.out.print(professores.get(i).getDtNascimento() + "\n");
         		System.out.println("\n--------------------------");
+        		contador++;
             }
             System.out.println("(1)Voltar ao menu principal");
             System.out.println("(2)Voltar ao menu de Pesquisas");
@@ -357,7 +381,8 @@ public static void Menu_Cadastro(){
             } 
         }
 	}
-public static Professor Cadastro_Professor_Disciplina() {
+   
+	public static Professor Cadastro_Professor_Disciplina() {
 
    
         System.out.printf("----Cadastro  %d Professor----\n",contador);
@@ -436,6 +461,7 @@ public static Professor Cadastro_Professor_Disciplina() {
 	}
 	
 	public static void Lista_Cursos() {
+		
 		if(cursos.size() < 1) {
 			System.out.println("NENHUM CURSO CADASTRADO!!!");
 			System.out.println("1 - Cadastrar novo Curso");
@@ -456,18 +482,31 @@ public static Professor Cadastro_Professor_Disciplina() {
 				break;
 			}
 		}
-		
+		System.out.println("----Cursos Cadastrados----"); 
 		for(Curso curso : cursos) {
-			System.out.println("Nome:" + curso.getNomeCurso());
+			System.out.println("\nNome do Curso :" + curso.getNomeCurso());
+			System.out.println("\n--------------------------"); 
 		}
 	}
 	
 	public static Disciplina encontraDisciplina(String nome) {
 		Disciplina materia = null;
-		
+		int aux = 0;
 		for(Disciplina disciplina : disciplinas) {
 			if(disciplina.getNome().equals(nome)) {
 				materia = disciplina;
+				aux = 1;
+			}
+			
+		}
+		if(aux == 0){
+			System.out.println("Disciplina nao cadastrada\nDeseja cadastrar uma disciplina ?(1)\n"
+					+ "Voltar ao menu pricipal(2)");
+			int esc = sc.nextInt();
+			if(esc == 1) {
+				Cadastro_Diciplina();
+			}else {
+				Menu_Principal();
 			}
 		}
 		return materia;
@@ -563,7 +602,6 @@ public static Professor Cadastro_Professor_Disciplina() {
 		}
 	}
 
-	
 	public static void Cadastrar_Estudantes() {
 		boolean menu = true;
 		
@@ -773,8 +811,7 @@ public static Professor Cadastro_Professor_Disciplina() {
 	
 	
 	
-	
-	
+	/*nao dessa*/
 	
 	
 	
