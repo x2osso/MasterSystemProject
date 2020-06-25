@@ -148,10 +148,10 @@ public class Executavel {
 		
 		switch(escolha) {
 			case "a":
-					Cadastro_Professor();
+				Cadastro_Professor();
 				break;
 			case "b":
-					Cadastro_Diciplina();
+				Cadastro_Diciplina();
 				loop = 1;
 				break;
 			case "c":
