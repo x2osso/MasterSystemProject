@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class Estudante extends Pessoa {
 	private String RA;
-	private int periodo;
+	private String periodo;
 	private Curso curso;
 	
-	public Estudante(String nome, String cpf, LocalDate dtNascimento, String RA, int periodo, Curso curso) {
+	public Estudante(String nome, String cpf, LocalDate dtNascimento, String RA, String periodo, Curso curso) {
 		super(nome, cpf, dtNascimento);
 		setRA(RA);
 		setPeriodo(periodo);
@@ -22,11 +22,11 @@ public class Estudante extends Pessoa {
 		return this.RA;
 	}
 	
-	private void setPeriodo(int periodo) {
-		this.periodo = periodo;
+	private void setPeriodo(String periodo2) {
+		this.periodo = periodo2;
 	}
 	
-	public int getPeriodo() {
+	public String getPeriodo() {
 		return this.periodo;
 	}
 	
