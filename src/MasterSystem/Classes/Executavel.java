@@ -1,6 +1,7 @@
 package MasterSystem.Classes;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -369,6 +370,7 @@ public class Executavel {
             }
         	
         }else{
+        	
         	for(int i = 0; i < disciplinas.size() ;i++){
                 System.out.println("\n----Diciplinas Cadastradas----"); 
                 System.out.printf("Nome:");
@@ -378,7 +380,7 @@ public class Executavel {
                 System.out.printf("Professor:");
                 System.out.println(disciplinas.get(i).getProfessor());
         		System.out.println("\n--------------------------");
-            } 
+            }  
         }
 	}
    
@@ -598,9 +600,11 @@ public class Executavel {
         	break;
         default:
         	System.out.println("Entrada invalida !!!!!!");
-        }
+    }
 
-	}
+}
+
+
 	
 	public static void Lista_Colegiado() {
 		if(colegiados.size() < 1) {
@@ -764,11 +768,29 @@ public class Executavel {
         menu = true;
         
         do {
+        	boolean controle = true;
+        	String newRA = "";
+        	
         	System.out.println("Seguem os alunos cadastrados no curso");
         	Lista_Alunos_Curso(nomeCurso);
         	
-        	System.out.println("Insira o RA do aluno para colocá-lo na aula");
-        	String newRA = sc.nextLine();
+        	do {
+        		System.out.println("Insira o RA do aluno para colocá-lo na aula");
+        		newRA = sc.nextLine();
+        		
+        		for(int i = 0; i < alunosCurso.size(); i++) {     			
+        			if(alunosCurso.get(i).getCurso().equals(nomeCurso)) {
+        				HashMap<String,Estudante> alunos_curso = alunosCurso.get(i).recuperarListaAlunos();
+        				for(Estudante estudante : alunos_curso.values()) {
+        					if(estudante.getRA().equals(newRA)) {
+        						controle = false;
+        						break;
+        					}
+        				}
+        			}
+        		}
+        		System.out.println("Aluno não faz esse curso, favor insira outro");
+        	} while(controle);
         	
         	aula.addAluno(Encontra_Estudante(newRA));
         	
@@ -823,19 +845,8 @@ public class Executavel {
 		     System.out.println();
 		}
 	}
-	
-	
-	
-	/*nao dessa*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	/*Dados para teste*/
 	
 	public static void Cadastro_Automatico_Professor() {
 
@@ -860,8 +871,7 @@ public class Executavel {
         professores.add(professor);
 
         Cadastro_Automatico_Disciplina();
-
-        
+      
 	}
 	public static void Cadastro_Automatico_Disciplina() {
 		Professor professorD = null;
@@ -879,7 +889,4 @@ public class Executavel {
 		}
 		Menu_Principal();
 	}
-	
-	
-	
 }
