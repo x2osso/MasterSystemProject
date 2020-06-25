@@ -14,6 +14,7 @@ public class Executavel {
 	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
 	public static ArrayList<Estudante> estudantes = new ArrayList<Estudante>();
 	public static ArrayList<AlunosCurso> alunosCurso = new ArrayList<AlunosCurso>();
+	public static ArrayList<Aula> aulas = new ArrayList<Aula>();
 	
 	public static Scanner sc = new Scanner(System.in);
     public static int tam=1;
@@ -552,7 +553,7 @@ public static Professor Cadastro_Professor_Disciplina() {
 				}
 			}
 		}
-		}
+	}
 
 	
 	public static void Cadastrar_Estudantes() {
@@ -654,11 +655,91 @@ public static Professor Cadastro_Professor_Disciplina() {
 		}
 	}
 	
-
+	public static void Cria_Aula() {
+		boolean menu = true;
+		
+		System.out.println("------------Criação de Aula----------------");
+		
+		sc.nextLine();
+		
+		System.out.println("De qual curso será essa aula?");
+		String nomeCurso = sc.nextLine();
+		
+		Curso curso = Encontra_Curso(nomeCurso);
+		ArrayList<Disciplina> materias = curso.recuperarDisciplinas();
+		
+		System.out.println("Qual laboratório irá ocorrer a aula?");
+		String lab = sc.nextLine();
+		
+		System.out.println("Digite data da aula utilizando ' / ' Exemplo:18/08/1998:");
+        String dataString = sc.next(); 
+        String [] dataSeparada = dataString.split("/");
+        LocalDate  dtAula = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
+        
+        System.out.println("Disciplinas existentes:");
+        Lista_Disciplina();
+        
+        String nomeDisciplina = ""; 
+        do {
+        	sc.nextLine();
+            System.out.println("De qual disciplina será essa aula?");
+            nomeDisciplina = sc.nextLine();
+            
+            for(Disciplina disciplina : materias) {
+            	if(disciplina.getNome().equals(nomeDisciplina)) {
+            		menu = false;
+            		break;
+            	} else {
+            		System.out.println("Disciplina não condizente com as cadastradas no curso. Favor, insira uma condizente.");
+            		break;
+            	}
+            }
+        } while(menu);
+        
+        Disciplina disciplina = encontraDisciplina(nomeDisciplina);
+        
+        Aula aula = new Aula(lab, dtAula, disciplina);
+        
+        menu = true;
+        
+        do {
+        	System.out.println("Seguem os alunos cadastrados no curso");
+        	Lista_Alunos_Curso(nomeCurso);
+        	
+        	System.out.println("Insira o RA do aluno para colocá-lo na aula");
+        	String newRA = sc.nextLine();
+        	
+        	aula.addAluno(Encontra_Estudante(newRA));
+        	
+        	System.out.println("1 - Adicionar novo aluno");
+        	System.out.println("2 - Finalizar criação");
+        	int escolha = sc.nextInt();
+        	
+        	switch(escolha) {
+        	case 1:
+        		menu = true;
+        		break;
+        	case 2:
+        		Menu_Cadastro();
+        		menu = false;
+        		break;
+        	}
+        } while(menu);
+        
+        aulas.add(aula);
+	}
 	
-	
-	
-	
+	private static Estudante Encontra_Estudante(String RA) {
+		Estudante estudante = null;
+		
+		for(Estudante estudante_aux : estudantes) {
+			if (RA.equals(estudante_aux.getRA())) {
+    			estudante = estudante_aux;
+    		}
+		}
+		return estudante;
+	}
+		
 	
 	
 	

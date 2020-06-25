@@ -1,14 +1,14 @@
 package MasterSystem.Classes;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 public class Aula {
 	private String lab;
-	private Date dataHora;
+	private LocalDate dataHora;
 	private Disciplina disciplina;
 	private HashMap<String,Estudante> alunosAula = new HashMap<String, Estudante>();
 	
-	public Aula(String lab, Date dataHora, Disciplina disciplina) {
+	public Aula(String lab, LocalDate dataHora, Disciplina disciplina) {
 		setLab(lab);
 		setDataHora(dataHora);
 		setDisciplina(disciplina);
@@ -22,11 +22,11 @@ public class Aula {
 		return this.lab;
 	}
 	
-	private void setDataHora(Date dataHora) {
+	private void setDataHora(LocalDate dataHora) {
 		this.dataHora = dataHora;
 	}
 	
-	public Date getDataHora() {
+	public LocalDate getDataHora() {
 		return this.dataHora;
 	}
 	
