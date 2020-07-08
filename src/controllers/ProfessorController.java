@@ -46,19 +46,27 @@ public class ProfessorController {
             professores.add(professor);
             System.out.println("Professor cadastrado com sucesso!");
     		System.out.println("\n--------------------------");
+    		
+    		System.out.println("1 - Cadastrar novo professor");
+    		System.out.println("2 - Finalizar cadastro de professores");
+    		int escolha = sc.nextInt();
+    		
+    		if(escolha == 2) {
+    			loop = 1;
+    		}
         }while(loop == 0);
 	}
 
-	public void Lista_Professores() {
+	public void Listagem_Professores() {
         System.out.println("----Professores Cadastrados----"); 
         if(professores.size() < 1) {
         	System.out.println("Nenhum professor cadastrado!");  	
         }else{      	
         	for(Professor professor : professores) {
         		System.out.println("--------------------------");
-                System.out.printf("Nome: " + professor.getNome());
-                System.out.printf("CPF: " + professor.getCpf());
-                System.out.printf("Data: " + professor.getDtNascimento());
+                System.out.println("Nome: " + professor.getNome());
+                System.out.println("CPF: " + professor.getCpf());
+                System.out.println("Data: " + professor.getDtNascimento());
         		System.out.println("\n--------------------------");
         	}
         }

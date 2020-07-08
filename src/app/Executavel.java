@@ -22,6 +22,8 @@ import models.Professor;
 public class Executavel {
 	
 	/* FUNCIONA CARALHO */
+	
+	
 	private static ProfessorController professores = new ProfessorController();
 	
 	
@@ -98,7 +100,7 @@ public class Executavel {
 				break;
 			case 1:
 				loop = 1;
-				professores.Lista_Professores();
+				professores.Listagem_Professores();
 				break;
 			case 2:	
 				loop = 1;
