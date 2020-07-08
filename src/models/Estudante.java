@@ -1,4 +1,4 @@
-package MasterSystem.Classes;
+package models;
 
 import java.time.LocalDate;
 

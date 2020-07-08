@@ -1,4 +1,4 @@
-package MasterSystem.Classes;
+package app;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,11 +10,21 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import controllers.ProfessorController;
+import models.AlunosCurso;
+import models.Aula;
+import models.Colegiado;
+import models.Curso;
+import models.Disciplina;
+import models.Estudante;
+import models.Professor;
+
 public class Executavel {
 	
 	/* FUNCIONA CARALHO */
+	private static ProfessorController professores = new ProfessorController();
 	
-	public static List<Professor> professores = new ArrayList<Professor>();
+	
 	public static List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
 	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
@@ -22,14 +32,16 @@ public class Executavel {
 	public static ArrayList<AlunosCurso> alunosCurso = new ArrayList<AlunosCurso>();
 	public static ArrayList<Aula> aulas = new ArrayList<Aula>();
 	
+		
 	public static Scanner sc = new Scanner(System.in);
     public static int contador =1;
 	
 	public static void main(String[] args) {
-		Cadastro_Automatico_Professor();
+		Cadastro_Automatico_Professor();	
 	}
 	
 	public static void Menu_Principal() {	
+		
 		int loop = 0;
 		int escolha;
 		do {
@@ -86,7 +98,7 @@ public class Executavel {
 				break;
 			case 1:
 				loop = 1;
-				Lista_Professores();
+				professores.Lista_Professores();
 				break;
 			case 2:	
 				loop = 1;
@@ -148,7 +160,7 @@ public class Executavel {
 		
 		switch(escolha) {
 			case "a":
-					Cadastro_Professor();
+					professores.Cadastro_Professor();
 				break;
 			case "b":
 					Cadastro_Diciplina();
@@ -186,53 +198,7 @@ public class Executavel {
 		}while(loop == 0);
 	}
 	
-	public static void Cadastro_Professor() {
-        int loop = 0;
-        int escolha = 0;
-
-        do {
-            System.out.printf("\n\n----Cadastro  %d Professor----\n",contador);
-            System.out.println("Digite o Nome:");
-            String nome = sc.next();
-            
-            System.out.println("Digite o numero de cpf:");
-            String cpf = sc.next(); 
-            
-            System.out.println("Digite data de nascimento utilizando ' / ' Exemplo:18/08/1998:");
-            String dataString = sc.next(); 
-            String [] dataSeparada = dataString.split("/");
-            LocalDate  dtNascimento = LocalDate.of(Integer.parseInt(dataSeparada[2]), Integer.parseInt(dataSeparada[1]),Integer.parseInt(dataSeparada[0]));
-            System.out.println(dtNascimento);
-            
-            System.out.println("Digite o numero de registro:");
-            String nRegistro = sc.next(); 
-            
-            System.out.println("Digite titulação:");
-            String titulação = sc.next(); 
-            
-            System.out.println("Digite Horas Semanais:");
-            float horasSemanais = sc.nextFloat();
-            
-            System.out.println("Digite Preço por Hora, exemplo: 4,50 :");
-            double precoHora = sc.nextDouble();
-
-            contador++;
-            Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
-            professores.add(professor);
-    		System.out.println("\n--------------------------");
-            System.out.println("(1)Cadastrar um novo professor");
-            System.out.println("(2)Voltar ao menu de cadastro");
-            escolha = sc.nextInt();
-            if(escolha==1) {
-
-            }else {
-                loop = 1;
-                Menu_Cadastro();
-            }
-            
-        }while(loop == 0);
-	}
-	
+		
 	public static void Cadastro_Diciplina() {
 		int loop = 0;
 		int escolhaProf;
@@ -247,7 +213,7 @@ public class Executavel {
                 	professorD = Cadastro_Professor_Disciplina();
                 	break;
                 case 2:
-                	if(professores.size() < 1) {
+                	if(professores.getLista_Professores().size() < 1) {
                     	System.out.println("!! NENHUMA PROFESSOR CADASTRADO!! ");
     	                System.out.println("\n(1)Cadastrar NOVO Professor\n(2)Voltar ao menu principal");
     	                int escolha = sc.nextInt();
@@ -259,24 +225,22 @@ public class Executavel {
     	               }
                     	
                    }else{
-                		contador=1;
-	                	for(int i = 0; i < professores.size() ;i++){
-	    	        		System.out.println("\n--------------------------");
-	                        System.out.printf("\n -- %d. Professor --\n",contador);
-	                        System.out.printf("Nome:");
-	                        System.out.print(professores.get(i).getNome() + "\n");
-	                        System.out.printf("CPF:");
-	                        System.out.print(professores.get(i).getCpf() + "\n");
-	                        contador++;
-	                    } 
+	                	for(Professor profissional : professores.getLista_Professores()) {
+	                		System.out.println("--------------------------");
+	                        System.out.println("-- Professor --");
+	                        System.out.println("Nome: " + profissional.getNome());
+	                        System.out.println("CPF: " + profissional.getCpf());
+	                	}
+	                	
 	                	System.out.println("Digite o CPF do professor escolhido: ");
 	                	String escolha = sc.next();
 	                	
-	                	for(int i = 0; i < professores.size() ;i++) {
+	                	for(int i = 0; i < professores.getLista_Professores().size() ;i++) {
 	                		
-	                		  System.out.print(professores.get(i).getCpf() + "\n");
-		            			if(escolha.equals(professores.get(i).getCpf())) {
-				                	professorD = professores.get(i);
+	                		  System.out.print(professores.getLista_Professores().get(i).getCpf() + "\n");
+		            			
+	                		  if(escolha.equals(professores.getLista_Professores().get(i).getCpf())) {
+				                	professorD = professores.getLista_Professores().get(i);
 		        	                System.out.printf("\n----Cadastro  de  Disciplina----\n");
 		        	                System.out.println("Digite o nome da materia:");
 		        	                String nomeDic = sc.next();
@@ -328,40 +292,7 @@ public class Executavel {
 		}while(loop == 0);
 	}
 	
-	public static void Lista_Professores() {
-        contador =1;
-        System.out.println("----Professores Cadastrados----"); 
-        if(professores.size() < 1) {
-        	System.out.println("Nenhum Professor Cadastrado :c");
-        	System.out.println("(1)Cadastrar um novo professor");
-            System.out.println("(2)Voltar ao menu de cadastro");
-            int escolhaList = sc.nextInt();
-            if(escolhaList==1) {
-            	
-            }   	
-        }else{
-        	for(int i = 0; i < professores.size() ;i++){
-        		System.out.println("--------------------------");
-                System.out.printf("\n -- %d Professor --\n",contador);
-                System.out.printf("Nome:");
-                System.out.print(professores.get(i).getNome() + "\n");
-                System.out.printf("CPF:");
-                System.out.print(professores.get(i).getCpf() + "\n");
-                System.out.printf("Data:");
-                System.out.print(professores.get(i).getDtNascimento() + "\n");
-        		System.out.println("\n--------------------------");
-        		contador++;
-            }
-            System.out.println("(1)Voltar ao menu principal");
-            System.out.println("(2)Voltar ao menu de Pesquisas");
-            int escolha = sc.nextInt();
-            if(escolha==1) {
-            	Menu_Principal();
-            }else {
-				Menu_Pesquisas();
-            }
-        }
-	}
+	
 
 	public static void Lista_Disciplina(String nomeCurso) {
         if(disciplinas.size() < 1) {
@@ -442,7 +373,7 @@ public class Executavel {
         double precoHora = sc.nextDouble();
 
         Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
-        professores.add(professor);
+        professores.add_Professor(professor);
 
         return professor; 
 	}
@@ -557,7 +488,7 @@ public class Executavel {
 	public static Professor Encontra_Professor(String CPF) {
 		Professor professor = null;
 		
-		for(Professor professor_aux : professores) {
+		for(Professor professor_aux : professores.getLista_Professores()) {
 			if (CPF.equals(professor_aux.getCpf())) {
     			professor = professor_aux;
     		}
@@ -601,12 +532,13 @@ public class Executavel {
         		
         		contador =1;
         		System.out.println("\n-------------Professores cadastrados-------------"); 
-            	for(int i = 0; i < professores.size() ;i++){
+        		
+            	for(int i = 0; i < professores.getLista_Professores().size() ;i++){
                     System.out.printf("\n %d. Professor\n",contador);
                     System.out.printf("Nome:");
-                    System.out.print(professores.get(i).getNome() + "\n");
+                    System.out.print(professores.getLista_Professores().get(i).getNome() + "\n");
                     System.out.printf("CPF:");
-                    System.out.print(professores.get(i).getCpf() + "\n");
+                    System.out.print(professores.getLista_Professores().get(i).getCpf() + "\n");
                     contador++;
                 } 
                 System.out.println("Digite o CPF do professor escolhido: ");
@@ -639,7 +571,7 @@ public class Executavel {
 			System.out.println("!! NENHUM COLEGIADO CADASTRADO !!");
 		}else {
 			
-			Collections.sort(professores, new Comparator<Professor>() {
+			Collections.sort(professores.getLista_Professores(), new Comparator<Professor>() {
 				@Override
 				public int compare(Professor professor1, Professor professor2) {
 					return professor1.getNome().compareTo(professor2.getNome());
@@ -652,10 +584,10 @@ public class Executavel {
 					System.out.println("Professores do curso:");
 					System.out.println();
 					
-					for(Professor professor : professores) {
-						System.out.println("Nome: " + professor.getNome());
-						System.out.println("Titulação:" + professor.getTitulação());
-						System.out.println("Horas semanais: " + professor.getHorasSemanais());
+					for(Professor profissional : professores.getLista_Professores()) {
+						System.out.println("Nome: " + profissional.getNome());
+						System.out.println("Titulação:" + profissional.getTitulação());
+						System.out.println("Horas semanais: " + profissional.getHorasSemanais());
 						System.out.println();
 						System.out.println("------------------------------");
 						System.out.println();
@@ -903,7 +835,7 @@ public class Executavel {
 
         contador++;
         Professor professor = new Professor(nome, cpf,nRegistro,titulação,horasSemanais,precoHora, dtNascimento);
-        professores.add(professor);
+        professores.add_Professor(professor);
 
         Cadastro_Automatico_Disciplina();
       
@@ -914,8 +846,8 @@ public class Executavel {
 		String escolha = "546";
 	                	
 		for(int i = 0; i < 1;i++) {
-			if(escolha.equals(professores.get(i).getCpf())) {
-				professorD = professores.get(i);
+			if(escolha.equals(professores.getLista_Professores().get(i).getCpf())) {
+				professorD = professores.getLista_Professores().get(i);
 				String nomeDic ="matematica";
 				int cargaHorariaDic = 3;
 	        	Disciplina disciplina = new Disciplina(nomeDic,cargaHorariaDic,professorD);

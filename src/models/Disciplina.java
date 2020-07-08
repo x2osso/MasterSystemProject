@@ -1,4 +1,4 @@
-package MasterSystem.Classes;
+package models;
 
 public class Disciplina {
 	private String nome;

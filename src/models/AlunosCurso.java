@@ -1,4 +1,4 @@
-package MasterSystem.Classes;
+package models;
 import java.util.HashMap;
 
 public class AlunosCurso {
