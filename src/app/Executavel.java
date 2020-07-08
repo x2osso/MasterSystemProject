@@ -27,6 +27,9 @@ public class Executavel {
 	private static ProfessorController professores = new ProfessorController();
 	
 	
+	/* FUNCIONA  */
+	/*Para teste foi criado um professor e uma materia ja !!!!*/
+	public static List<Professor> professoresList = new ArrayList<Professor>();
 	public static List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 	public static ArrayList<Curso> cursos = new ArrayList<Curso>();
 	public static ArrayList<Colegiado> colegiados = new ArrayList<Colegiado>();
@@ -165,7 +168,7 @@ public class Executavel {
 					professores.Cadastro_Professor();
 				break;
 			case "b":
-					Cadastro_Diciplina();
+				Cadastro_Diciplina();
 				loop = 1;
 				break;
 			case "c":
@@ -622,9 +625,9 @@ public class Executavel {
 	        System.out.println("Digite o RA:");
 	        String RA = sc.next(); 
 	        
-	        System.out.println("Qual o período?:");
-	        int periodo = sc.nextInt(); 
-	        sc.nextLine();
+	        System.out.println("Qual o período?:(Manha/Tarde/Noite)");
+	        String periodo = sc.next(); 
+	        
 	        
 	        System.out.println("Segue os cursos já existentes:");
 	        Lista_Cursos();
