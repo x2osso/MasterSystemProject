@@ -57,6 +57,22 @@ public class ProfessorController {
         }while(loop == 0);
 	}
 
+	
+	public List<Professor> getLista_Professores() {
+		return this.professores;
+	}
+	
+	public Professor getProfessor(String CPF) {
+		for(Professor professor_aux : professores) {
+			if (CPF.equals(professor_aux.getCpf())) {
+    			return professor_aux;
+    		}
+		}
+		return null;
+	}
+	
+	// TIRAR DEPOIS 
+	
 	public void Listagem_Professores() {
         System.out.println("----Professores Cadastrados----"); 
         if(professores.size() < 1) {
@@ -72,11 +88,8 @@ public class ProfessorController {
         }
 	}
 	
-	public List<Professor> getLista_Professores() {
-		return this.professores;
-	}
-	
 	public void add_Professor(Professor professor) {
 		professores.add(professor);
 	}
+	
 }

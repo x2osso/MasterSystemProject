@@ -47,7 +47,11 @@ public class Professor extends Pessoa{
 		return horasSemanais;
 	}
 	
-	public String getProfessor() {
-		return getNome();
+	public String getNome() {
+		return super.getNome();
+	}
+	
+	public Professor getProfessor() {
+		return this;
 	}
 }
